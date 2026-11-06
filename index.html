@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روش پژوهش | هاب دوره</title>
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset و متغیرها */
+        :root {
+            --primary: #00d4aa;
+            --secondary: #06b6d4;
+            --tertiary: #a855f7;
+            --gold: #ffb700;
+            --success: #22c55e;
+            --danger: #ff4757;
+            --pink: #ec4899;
+            --dark: #050818;
+            --darker: #020410;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text: #e8eef7;
+            --text-dim: #9aa7bd;
+            --phase-1: #1e3c72;
+            --phase-2: #1e6f5c;
+            --phase-3: #b86b1e;
+            --phase-4: #6a2c70;
+            --phase-5: #b33939;
+            --phase-6: #2a5298;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* افکت‌های پس‌زمینه */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.3;
+            animation: floatOrb 15s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; right: -100px; }
+        .orb-2 { width: 350px; height: 350px; background: var(--tertiary); bottom: -50px; left: -50px; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: var(--gold); top: 50%; left: 40%; animation-delay: -10s; opacity: 0.15; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* کانتینر اصلی */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* هدر */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(5, 8, 24, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--gold), var(--tertiary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s linear infinite;
+        }
+        .header-title p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+        }
+        .icon-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        .icon-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+
+        /* هیرو */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3rem 0;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .hero-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .hero-text h2 span { color: var(--gold); }
+        .hero-text p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+        }
+        /* کانواس تعاملی هیرو */
+        #hero-canvas {
+            width: 100%;
+            height: 300px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            background: rgba(0,0,0,0.3);
+            cursor: crosshair;
+        }
+        .hero-canvas-hint {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            background: rgba(0,0,0,0.5);
+            padding: 0.2rem 0.8rem;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        /* تب‌ها */
+        .tabs-container {
+            margin: 2rem 0;
+        }
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .tab-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-dim);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: rgba(0, 212, 170, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 170, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* کارت‌های دوره */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 212, 170, 0.1);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        .card-header .badge {
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--card-border);
+        }
+        .card-footer .date { font-size: 0.8rem; color: var(--text-dim); }
+        .card-footer .status {
+            font-size: 0.8rem;
+            color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+        }
+        .card-footer .status.soon {
+            color: var(--gold);
+            background: rgba(255, 183, 0, 0.1);
+        }
+        .card-footer .status.ready {
+            color: var(--primary);
+            background: rgba(0, 212, 170, 0.1);
+        }
+        .btn-enter {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .btn-enter:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 212, 170, 0.4);
+        }
+
+        /* بخش پادکست */
+        .podcast-section {
+            margin-top: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+        }
+        .podcast-cover {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+        .podcast-info { flex: 1; }
+        .podcast-info h3 { color: var(--gold); margin-bottom: 0.5rem; }
+        .podcast-info p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1rem; }
+        .audio-player { width: 100%; max-width: 500px; }
+
+        /* مودال */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+        }
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* ================= پروژه‌ها (MEMS/NEMS) ================= */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .project-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        .project-card .p-num {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--dark);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .project-card h4 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .project-card .p-ref {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        .project-card .p-tag {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--tertiary);
+            display: inline-block;
+        }
+
+        .roadmap-box {
+            background: rgba(0, 212, 170, 0.05);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .roadmap-box h3 { color: var(--primary); margin-bottom: 1rem; }
+        .roadmap-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+        .roadmap-step .step-num {
+            background: var(--primary);
+            color: var(--dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .roadmap-step .step-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-dim);
+        }
+        .roadmap-step .step-text strong { color: var(--text); }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .tool-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .tool-item:hover {
+            border-color: var(--gold);
+            background: rgba(255, 183, 0, 0.05);
+        }
+        .tool-item a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .tool-item p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+        }
+
+        /* ================= دائره‌المعارف ================= */
+        .glossary-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .glossary-search {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .glossary-search:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 170, 0.2);
+        }
+        .glossary-category {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .glossary-category.active, .glossary-category:hover {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .glossary-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        .glossary-item:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        .glossary-item .term-en {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+            direction: ltr;
+            text-align: left;
+            margin-bottom: 0.3rem;
+        }
+        .glossary-item .term-fa {
+            font-size: 0.95rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        .glossary-item .term-def {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+        .glossary-item .term-cat {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--tertiary);
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 1rem; text-align: center; }
+            .hero-text h2 { font-size: 1.8rem; }
+            .tabs-nav { gap: 0.3rem; }
+            .tab-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+            .podcast-section { flex-direction: column; text-align: center; }
+            #hero-canvas { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- پس‌زمینه -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- هدر -->
+    <header>
+        <div class="header-title">
+            <h1>روش پژوهش</h1>
+            <p>دانشگاه تربت حیدریه | گروه مهندسی مکانیک</p>
+        </div>
+        <div class="header-controls">
+            <button class="icon-btn" id="sound-toggle" title="صدا"><i class="fa-solid fa-volume-high"></i></button>
+            <button class="icon-btn" onclick="window.location.href='#lessons'" title="جلسات"><i class="fa-solid fa-book"></i></button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- هیرو -->
+        <section class="hero">
+            <div class="hero-text">
+                <h2>به دنیای <span>پژوهش</span> خوش آمدید</h2>
+                <p>
+                    این دوره با همکاری <b>دکتر علی کوچی</b> و <b>دکتر مسعود گوهری منش</b> طراحی شده است. 
+                    هدف، آموزش گام‌به‌گام روش پژوهش از انتخاب موضوع تا انتشار مقاله علمی است.
+                </p>
+                <a href="#lessons" class="tab-btn" style="text-decoration: none; display: inline-block;">مشاهده جلسات <i class="fa-solid fa-arrow-down"></i></a>
+            </div>
+            <div class="hero-image">
+                <canvas id="hero-canvas"></canvas>
+                <div class="hero-canvas-hint">موس را حرکت دهید تا ذرات به هم متصل شوند</div>
+            </div>
+        </section>
+
+        <!-- تب‌ها -->
+        <div class="tabs-container" id="lessons">
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="overview">نمای کلی</button>
+                <button class="tab-btn" data-tab="sessions">جلسات</button>
+                <button class="tab-btn" data-tab="syllabus">سیلابس</button>
+                <button class="tab-btn" data-tab="evaluation">ارزشیابی</button>
+                <button class="tab-btn" data-tab="projects">پروژه‌ها</button>
+                <button class="tab-btn" data-tab="podcast">پادکست‌ها</button>
+                <button class="tab-btn" data-tab="glossary">دائره‌المعارف</button>
+                <button class="tab-btn" data-tab="contact">تماس</button>
+            </div>
+
+            <!-- تب نمای کلی -->
+            <div class="tab-content active" id="overview">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">درباره دوره</h2>
+                <p style="line-height: 1.8; color: var(--text-dim); margin-bottom: 2rem;">
+                    درس «روش پژوهش» یک درس <b>۱ واحدی</b> برای دانشجویان کارشناسی ارشد مهندسی مکانیک است. 
+                    در این دوره، دانشجویان با مبانی پژوهش، اخلاق علمی، روش‌های کیفی و کمی، نگارش علمی، 
+                    و فرآیند انتشار مقاله آشنا می‌شوند. رویکرد دوره کاملاً پروژه‌محور است و دانشجویان 
+                    به صورت عملی یک مقاله مروری در حوزه MEMS/NEMS را از ابتدا تا انتها طراحی می‌کنند.
+                </p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fa-solid fa-user-tie"></i> مدرسین</h3></div>
+                        <p>دکتر علی کوچی<br>دکتر مسعود گوهری منش</p>
+                        <div class="card-footer"><span class="date">دانشیار گروه مهندسی مکانیک</span></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fa-solid fa-clock"></i> زمان</h3></div>
+                        <p>۸ جلسه (۱ واحدی)<br>نیمسال اول</p>
+                        <div class="card-footer"><span class="date">پیش‌نیاز: ۰</span></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i class="fa-solid fa-envelope"></i> ایمیل</h3></div>
+                        <p>A.koochi@gmail.com</p>
+                        <div class="card-footer"><span class="date">ارتباط با استاد</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب جلسات -->
+            <div class="tab-content" id="sessions">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">جلسات دوره</h2>
+                <div class="cards-grid">
+                    <!-- جلسه ۱ -->
+                    <a href="sessions/session-01/index.html" class="card" style="text-decoration: none; color: inherit;">
+                        <div class="card-header">
+                            <h3>جلسه ۱</h3>
+                            <span class="badge" style="background: var(--phase-1); color: white;">فاز ۱</span>
+                        </div>
+                        <p>درآمدی بر پژوهش و اخلاق علمی</p>
+                        <div class="card-footer">
+                            <span class="date">هفته اول</span>
+                            <span class="status ready">ورود <i class="fa-solid fa-arrow-left"></i></span>
+                        </div>
+                    </a>
+                    <!-- جلسه ۲ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۲</h3>
+                            <span class="badge" style="background: var(--phase-1); color: white;">فاز ۱</span>
+                        </div>
+                        <p>انتخاب موضوع و پیشینه پژوهش</p>
+                        <div class="card-footer">
+                            <span class="date">هفته دوم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                    <!-- جلسه ۳ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۳</h3>
+                            <span class="badge" style="background: var(--phase-2); color: white;">فاز ۲</span>
+                        </div>
+                        <p>روش‌های کیفی، کمی و آمیخته</p>
+                        <div class="card-footer">
+                            <span class="date">هفته سوم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                    <!-- جلسه ۴ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۴</h3>
+                            <span class="badge" style="background: var(--phase-2); color: white;">فاز ۲</span>
+                        </div>
+                        <p>مدل‌سازی، مطالعه موردی و صحت‌سنجی</p>
+                        <div class="card-footer">
+                            <span class="date">هفته چهارم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                    <!-- جلسه ۵ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۵</h3>
+                            <span class="badge" style="background: var(--phase-3); color: white;">فاز ۳</span>
+                        </div>
+                        <p>ساختار گزارش و نگارش پایان‌نامه</p>
+                        <div class="card-footer">
+                            <span class="date">هفته پنجم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                    <!-- جلسه ۶ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۶</h3>
+                            <span class="badge" style="background: var(--phase-3); color: white;">فاز ۳</span>
+                        </div>
+                        <p>اصول تصویرسازی و داده‌نمایی</p>
+                        <div class="card-footer">
+                            <span class="date">هفته ششم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                    <!-- جلسه ۷ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۷</h3>
+                            <span class="badge" style="background: var(--phase-4); color: white;">فاز ۴</span>
+                        </div>
+                        <p>ارائه شفاهی و بصری</p>
+                        <div class="card-footer">
+                            <span class="date">هفته هفتم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                    <!-- جلسه ۸ -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>جلسه ۸</h3>
+                            <span class="badge" style="background: var(--phase-4); color: white;">فاز ۴</span>
+                        </div>
+                        <p>انتشار مقاله، کنفرانس و ژورنال</p>
+                        <div class="card-footer">
+                            <span class="date">هفته هشتم</span>
+                            <span class="status soon">به‌زودی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب سیلابس -->
+            <div class="tab-content" id="syllabus">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">سیلابس دوره</h2>
+                <ul style="list-style: none; line-height: 2;">
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> تعریف پژوهش، انواع آن و اخلاق علمی</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> انتخاب موضوع، پیشینه پژوهش و مدیریت مراجع</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> روش‌های کیفی، کمی و آمیخته</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> مدل‌سازی، مطالعه موردی و صحت‌سنجی</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> ساختار گزارش و نگارش پایان‌نامه</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> اصول تصویرسازی و داده‌نمایی</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> ارائه شفاهی و بصری</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--primary);"></i> انتشار مقاله، کنفرانس و ژورنال</li>
+                </ul>
+            </div>
+
+            <!-- تب ارزشیابی -->
+            <div class="tab-content" id="evaluation">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">ارزشیابی</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header"><h3>حضور و تکالیف</h3><span class="badge">۶ نمره</span></div>
+                        <p>حضور مؤثر در کلاس و انجام تکالیف</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>پروژه</h3><span class="badge">۸ نمره</span></div>
+                        <p>طراحی و اجرای یک مقاله مروری در حوزه MEMS/NEMS</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>امتحان پایان‌ترم</h3><span class="badge">۶ نمره</span></div>
+                        <p>آزمون کتبی جامع از مباحث دوره</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب پروژه‌ها (MEMS/NEMS) -->
+            <div class="tab-content" id="projects">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">پروژه‌های دوره (MEMS/NEMS)</h2>
+                <p style="color: var(--text-dim); margin-bottom: 1rem;">
+                    از بین ۲۰ موضوع زیر، یک موضوع را انتخاب کنید و مسیر گام‌به‌گام را تا نگارش مقاله مروری دنبال کنید.
+                </p>
+                
+                <div class="project-grid">
+                    <!-- ۱ -->
+                    <div class="project-card">
+                        <span class="p-num">۱</span>
+                        <h4>MEMS Resonators for Mass Sensing</h4>
+                        <p class="p-ref">Nathanson et al., "The Resonant Gate Transistor," IEEE Trans. Electron Devices, 1967</p>
+                        <span class="p-tag">حسگری جرم</span>
+                    </div>
+                    <!-- ۲ -->
+                    <div class="project-card">
+                        <span class="p-num">۲</span>
+                        <h4>Silicon as a Mechanical Material</h4>
+                        <p class="p-ref">Petersen, "Silicon as a Mechanical Material," Proc. IEEE, 1982</p>
+                        <span class="p-tag">مواد سیلیکونی</span>
+                    </div>
+                    <!-- ۳ -->
+                    <div class="project-card">
+                        <span class="p-num">۳</span>
+                        <h4>Surface Micromachining</h4>
+                        <p class="p-ref">Howe & Muller, "Polycrystalline Silicon Micromechanical Beams," 1983</p>
+                        <span class="p-tag">ساخت سطحی</span>
+                    </div>
+                    <!-- ۴ -->
+                    <div class="project-card">
+                        <span class="p-num">۴</span>
+                        <h4>Deep Reactive Ion Etching (DRIE)</h4>
+                        <p class="p-ref">Laermer & Schilp (Bosch), 1996</p>
+                        <span class="p-tag">فرآیند ساخت</span>
+                    </div>
+                    <!-- ۵ -->
+                    <div class="project-card">
+                        <span class="p-num">۵</span>
+                        <h4>Digital Light Processing (DLP)</h4>
+                        <p class="p-ref">Hornbeck, "Deformable-Mirror Spatial Light Modulators," 1989</p>
+                        <span class="p-tag">MEMS نوری</span>
+                    </div>
+                    <!-- ۶ -->
+                    <div class="project-card">
+                        <span class="p-num">۶</span>
+                        <h4>MEMS Accelerometers</h4>
+                        <p class="p-ref">Analog Devices ADXL series, 1990s</p>
+                        <span class="p-tag">شتاب‌سنج</span>
+                    </div>
+                    <!-- ۷ -->
+                    <div class="project-card">
+                        <span class="p-num">۷</span>
+                        <h4>MEMS Gyroscopes</h4>
+                        <p class="p-ref">Greiff et al., "Micromechanical tuning fork gyroscope," 1991</p>
+                        <span class="p-tag">ژیروسکوپ</span>
+                    </div>
+                    <!-- ۸ -->
+                    <div class="project-card">
+                        <span class="p-num">۸</span>
+                        <h4>BioMEMS / Biosensors</h4>
+                        <p class="p-ref">Manz et al., "Miniaturized Total Chemical Analysis Systems (µTAS)," 1990</p>
+                        <span class="p-tag">زیست‌حسگر</span>
+                    </div>
+                    <!-- ۹ -->
+                    <div class="project-card">
+                        <span class="p-num">۹</span>
+                        <h4>NEMS Resonators</h4>
+                        <p class="p-ref">Cleland & Roukes, "Fabrication of high frequency nanometer scale mechanical resonators," 1996</p>
+                        <span class="p-tag">NEMS تشدیدی</span>
+                    </div>
+                    <!-- ۱۰ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۰</span>
+                        <h4>2D Material NEMS</h4>
+                        <p class="p-ref">Bunch et al., "Electromechanical Resonators from Graphene Sheets," Science, 2007</p>
+                        <span class="p-tag">گرافن</span>
+                    </div>
+                    <!-- ۱۱ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۱</span>
+                        <h4>NEMS Mass Sensing (Single Dalton)</h4>
+                        <p class="p-ref">Jensen, Kim & Zettl, "An atomic-resolution nanomechanical mass sensor," Nature Nano, 2008</p>
+                        <span class="p-tag">حسگری اتمی</span>
+                    </div>
+                    <!-- ۱۲ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۲</span>
+                        <h4>MEMS Energy Harvesting</h4>
+                        <p class="p-ref">Roundy et al., "A study of low level vibrations as a power source," 2003</p>
+                        <span class="p-tag">برداشت انرژی</span>
+                    </div>
+                    <!-- ۱۳ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۳</span>
+                        <h4>Piezoelectric MEMS (PMUT)</h4>
+                        <p class="p-ref">Muralt, "PZT thin films for microsensors and actuators," 2000</p>
+                        <span class="p-tag">پیزوالکتریک</span>
+                    </div>
+                    <!-- ۱۴ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۴</span>
+                        <h4>MEMS Switches for RF</h4>
+                        <p class="p-ref">Yao & Chang, "A surface micromachined miniature switch," 1995</p>
+                        <span class="p-tag">RF MEMS</span>
+                    </div>
+                    <!-- ۱۵ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۵</span>
+                        <h4>Microfluidic Mixers</h4>
+                        <p class="p-ref">Stroock et al., "Chaotic mixer for microchannels," Science, 2002</p>
+                        <span class="p-tag">میکروسیالات</span>
+                    </div>
+                    <!-- ۱۶ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۶</span>
+                        <h4>MEMS Neural Probes</h4>
+                        <p class="p-ref">Wise & Najafi, "Microelectrodes for intracortical recording," 1985</p>
+                        <span class="p-tag">پروب عصبی</span>
+                    </div>
+                    <!-- ۱۷ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۷</span>
+                        <h4>MEMS Mirrors for LiDAR</h4>
+                        <p class="p-ref">Milanović et al., "Gimbal-less monolithic silicon actuators," 2004</p>
+                        <span class="p-tag">آینه MEMS</span>
+                    </div>
+                    <!-- ۱۸ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۸</span>
+                        <h4>Nanomechanical Sensing of Forces</h4>
+                        <p class="p-ref">Rugar et al., "Single spin detection by magnetic resonance force microscopy," Nature, 2004</p>
+                        <span class="p-tag">حسگری نیرو</span>
+                    </div>
+                    <!-- ۱۹ -->
+                    <div class="project-card">
+                        <span class="p-num">۱۹</span>
+                        <h4>MEMS for Harsh Environments (SiC)</h4>
+                        <p class="p-ref">Mehregany et al., "SiC MEMS: opportunities and challenges," 1999</p>
+                        <span class="p-tag">محیط‌های سخت</span>
+                    </div>
+                    <!-- ۲۰ -->
+                    <div class="project-card">
+                        <span class="p-num">۲۰</span>
+                        <h4>Flexible/Stretchable MEMS</h4>
+                        <p class="p-ref">Rogers et al., "Materials and mechanics for stretchable electronics," Science, 2010</p>
+                        <span class="p-tag">انعطاف‌پذیر</span>
+                    </div>
+                </div>
+
+                <!-- مسیر گام‌به‌گام -->
+                <div class="roadmap-box">
+                    <h3><i class="fa-solid fa-road"></i> مسیر گام‌به‌گام: از مقاله بنیان‌گذار تا مقاله مروری</h3>
+                    <div class="roadmap-step">
+                        <div class="step-num">۱</div>
+                        <div class="step-text"><strong>مقاله بنیان‌گذار را بخوانید:</strong> مقاله کلاسیک موضوع خود را از جدول بالا پیدا کنید و با دقت بخوانید. مسئله اصلی، روش نوآورانه و محدودیت‌های آن زمان را یادداشت کنید.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-num">۲</div>
+                        <div class="step-text"><strong>مسیر استنادات رو به جلو (Forward Citation Chaining):</strong> در Google Scholar مقاله بنیان‌گذار را جستجو کنید، روی «Cited by» کلیک کنید و ۱۰ مقاله اول و ۱۰ مقاله آخر را انتخاب کنید.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-num">۳</div>
+                        <div class="step-text"><strong>مسیر استنادات رو به عقب (Backward Citation Chaining):</strong> بخش References مقاله بنیان‌گذار را بررسی کنید و مقالات کلیدی‌تر را پیدا کنید.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-num">۴</div>
+                        <div class="step-text"><strong>از ابزارهای آنلاین استفاده کنید:</strong> با Litmaps، Semantic Scholar، Connected Papers و Scite مسیر استناد را رسم کنید و مقالات «زیبای خفته» را شناسایی کنید.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-num">۵</div>
+                        <div class="step-text"><strong>جدیدترین مقاله مروری را پیدا کنید:</strong> در Google Scholar جستجو کنید: <code>"[topic] review" 2024..2026</code> و جدیدترین Review را دانلود کنید.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-num">۶</div>
+                        <div class="step-text"><strong>مقاله مروری خود را بنویسید:</strong> ساختار: Introduction (تاریخچه) → Methods (دسته‌بندی) → Applications → Challenges & Future Directions → Conclusion.</div>
+                    </div>
+                </div>
+
+                <!-- ابزارهای آنلاین -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fa-solid fa-globe"></i> ابزارهای آنلاین برای پژوهش در MEMS/NEMS</h3>
+                    <div class="tools-grid">
+                        <div class="tool-item"><a href="https://ieeexplore.ieee.org" target="_blank">IEEE Xplore</a><p>مقالات IEEE</p></div>
+                        <div class="tool-item"><a href="https://www.sciencedirect.com" target="_blank">ScienceDirect</a><p>مقالات Elsevier</p></div>
+                        <div class="tool-item"><a href="https://www.webofscience.com" target="_blank">Web of Science</a><p>تحلیل استنادات</p></div>
+                        <div class="tool-item"><a href="https://www.scopus.com" target="_blank">Scopus</a><p>تحلیل استنادات</p></div>
+                        <div class="tool-item"><a href="https://scholar.google.com" target="_blank">Google Scholar</a><p>جستجوی آزاد</p></div>
+                        <div class="tool-item"><a href="https://www.semanticscholar.org" target="_blank">Semantic Scholar</a><p>جستجوی معنایی</p></div>
+                        <div class="tool-item"><a href="https://www.litmaps.com" target="_blank">Litmaps</a><p>نقشه استنادی</p></div>
+                        <div class="tool-item"><a href="https://www.connectedpapers.com" target="_blank">Connected Papers</a><p>گراف مقالات</p></div>
+                        <div class="tool-item"><a href="https://arxiv.org" target="_blank">arXiv</a><p>پیش‌چاپ‌ها</p></div>
+                        <div class="tool-item"><a href="https://nanohub.org" target="_blank">nanoHUB</a><p>شبیه‌سازی نانو</p></div>
+                        <div class="tool-item"><a href="https://elicit.com" target="_blank">Elicit</a><p>جستجوی معنایی</p></div>
+                        <div class="tool-item"><a href="https://scite.ai" target="_blank">Scite</a><p>تحلیل استنادات</p></div>
+                        <div class="tool-item"><a href="https://www.zotero.org" target="_blank">Zotero</a><p>مدیریت مراجع</p></div>
+                        <div class="tool-item"><a href="https://www.mendeley.com" target="_blank">Mendeley</a><p>مدیریت مراجع</p></div>
+                        <div class="tool-item"><a href="https://www.overleaf.com" target="_blank">Overleaf</a><p>نگارش LaTeX</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب پادکست‌ها -->
+            <div class="tab-content" id="podcast">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">پادکست‌های درس</h2>
+                <p style="color: var(--text-dim); margin-bottom: 1rem;">در این بخش، پادکست‌های هر جلسه قرار می‌گیرد.</p>
+                
+                <div class="podcast-section">
+                    <img src="images/podcast-cover.png" alt="پادکست جلسه ۱" class="podcast-cover img-clickable" data-caption="پادکست جلسه ۱">
+                    <div class="podcast-info">
+                        <h3>پادکست جلسه ۱: درآمدی بر پژوهش و اخلاق علمی</h3>
+                        <p>دکتر علی کوچی و دکتر مسعود گوهری منش</p>
+                        <audio controls class="audio-player">
+                            <source src="sessions/session-01/podcast.mp3" type="audio/mpeg">
+                            مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب دائره‌المعارف -->
+            <div class="tab-content" id="glossary">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">دائره‌المعارف اصطلاحات پژوهش</h2>
+                <p style="color: var(--text-dim); margin-bottom: 1rem;">تمام کلمات کلیدی حوزه پژوهش را با معادل انگلیسی و تعریف فارسی جستجو کنید.</p>
+                
+                <div class="glossary-controls">
+                    <input type="text" class="glossary-search" id="glossary-search" placeholder="جستجوی اصطلاح... (مثلاً Plagiarism)">
+                    <div class="glossary-category active" data-cat="all">همه</div>
+                    <div class="glossary-category" data-cat="ethics">اخلاق</div>
+                    <div class="glossary-category" data-cat="method">روش‌شناسی</div>
+                    <div class="glossary-category" data-cat="writing">نگارش</div>
+                    <div class="glossary-category" data-cat="publish">انتشار</div>
+                    <div class="glossary-category" data-cat="mems">MEMS/NEMS</div>
+                </div>
+
+                <div class="glossary-grid" id="glossary-grid">
+                    <!-- با JS پر می‌شود -->
+                </div>
+            </div>
+
+            <!-- تب تماس -->
+            <div class="tab-content" id="contact">
+                <h2 style="margin-bottom: 1rem; color: var(--primary);">تماس با ما</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header"><h3>دکتر علی کوچی</h3></div>
+                        <p>ایمیل: A.koochi@gmail.com</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>دکتر مسعود گوهری منش</h3></div>
+                        <p>ایمیل: m.goharimanesh@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- مودال تصویر -->
+    <div class="modal" id="image-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fa-solid fa-times"></i></button>
+            <img src="" alt="تصویر" id="modal-img">
+            <p id="modal-caption" style="text-align: center; margin-top: 1rem; color: var(--text-dim);"></p>
+        </div>
+    </div>
+
+    <script>
+        // ================= مدیریت تب‌ها با اسکرول صحیح =================
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.tab;
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                const targetContent = document.getElementById(target);
+                targetContent.classList.add('active');
+                
+                // اسکرول به بالای محتوای تب
+                targetContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                playClick();
+            });
+        });
+
+        // ================= افکت‌های صوتی =================
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClick() {
+            if (!soundEnabled) return;
+            initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        const soundToggle = document.getElementById('sound-toggle');
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            soundToggle.innerHTML = soundEnabled ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-xmark"></i>';
+            if (soundEnabled) playClick();
+        });
+
+        // ================= Lightbox =================
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalClose = document.getElementById('modal-close');
+
+        document.querySelectorAll('.img-clickable').forEach(img => {
+            img.addEventListener('click', () => {
+                modalImg.src = img.src;
+                modalCaption.textContent = img.dataset.caption || '';
+                modal.classList.add('active');
+                playClick();
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('active');
+            playClick();
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                playClick();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // ================= ذرات پس‌زمینه =================
+        const bgCanvas = document.getElementById('particle-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let bgParticles = [];
+
+        function resizeBgCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeBgCanvas);
+        resizeBgCanvas();
+
+        class BgParticle {
+            constructor() {
+                this.x = Math.random() * bgCanvas.width;
+                this.y = Math.random() * bgCanvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = ['#00d4aa', '#ffb700', '#a855f7'][Math.floor(Math.random() * 3)];
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > bgCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > bgCanvas.height) this.speedY *= -1;
+            }
+            draw() {
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                bgCtx.fillStyle = this.color;
+                bgCtx.globalAlpha = this.opacity;
+                bgCtx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) bgParticles.push(new BgParticle());
+
+        function animateBgParticles() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            bgParticles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateBgParticles);
+        }
+        animateBgParticles();
+
+        // ================= کانواس تعاملی هیرو =================
+        const heroCanvas = document.getElementById('hero-canvas');
+        const heroCtx = heroCanvas.getContext('2d');
+        let heroParticles = [];
+        let mouse = { x: null, y: null, radius: 100 };
+
+        function resizeHeroCanvas() {
+            const rect = heroCanvas.getBoundingClientRect();
+            heroCanvas.width = rect.width;
+            heroCanvas.height = rect.height;
+        }
+        window.addEventListener('resize', resizeHeroCanvas);
+        resizeHeroCanvas();
+
+        heroCanvas.addEventListener('mousemove', (e) => {
+            const rect = heroCanvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+        heroCanvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class HeroParticle {
+            constructor() {
+                this.x = Math.random() * heroCanvas.width;
+                this.y = Math.random() * heroCanvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.speedY = (Math.random() - 0.5) * 1;
+                this.color = ['#00d4aa', '#ffb700', '#a855f7'][Math.floor(Math.random() * 3)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > heroCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > heroCanvas.height) this.speedY *= -1;
+
+                // تعامل با موس
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= dx * force * 0.05;
+                        this.y -= dy * force * 0.05;
+                    }
+                }
+            }
+            draw() {
+                heroCtx.beginPath();
+                heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                heroCtx.fillStyle = this.color;
+                heroCtx.fill();
+            }
+        }
+
+        function initHeroParticles() {
+            heroParticles = [];
+            const count = Math.floor((heroCanvas.width * heroCanvas.height) / 5000);
+            for (let i = 0; i < count; i++) {
+                heroParticles.push(new HeroParticle());
+            }
+        }
+
+        function connectHeroParticles() {
+            for (let i = 0; i < heroParticles.length; i++) {
+                for (let j = i + 1; j < heroParticles.length; j++) {
+                    let dx = heroParticles[i].x - heroParticles[j].x;
+                    let dy = heroParticles[i].y - heroParticles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        heroCtx.beginPath();
+                        heroCtx.strokeStyle = `rgba(0, 212, 170, ${1 - distance / 100})`;
+                        heroCtx.lineWidth = 0.5;
+                        heroCtx.moveTo(heroParticles[i].x, heroParticles[i].y);
+                        heroCtx.lineTo(heroParticles[j].x, heroParticles[j].y);
+                        heroCtx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateHero() {
+            heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+            heroParticles.forEach(p => { p.update(); p.draw(); });
+            connectHeroParticles();
+            requestAnimationFrame(animateHero);
+        }
+
+        // ================= دائره‌المعارف (گسترده) =================
+        const glossaryData = [
+            // مبانی پژوهش
+            { en: 'Research', fa: 'پژوهش', def: 'فرآیند منظم و عینی برای کشف دانش جدید.', cat: 'method' },
+            { en: 'Systematic', fa: 'نظام‌مند', def: 'دارای روش و ترتیب مشخص.', cat: 'method' },
+            { en: 'Objective', fa: 'عینی', def: 'مبتنی بر شواهد و بدون سوگیری شخصی.', cat: 'method' },
+            { en: 'Reproducible', fa: 'تکرارپذیر', def: 'قابلیت بازتولید نتایج توسط دیگران.', cat: 'method' },
+            { en: 'Hypothesis', fa: 'فرضیه', def: 'حدس علمی قابل آزمون.', cat: 'method' },
+            { en: 'Variable', fa: 'متغیر', def: 'عاملی که می‌تواند تغییر کند یا اندازه‌گیری شود.', cat: 'method' },
+            { en: 'Validity', fa: 'اعتبار', def: 'میزان اندازه‌گیری آنچه که باید اندازه‌گیری شود.', cat: 'method' },
+            { en: 'Reliability', fa: 'پایایی', def: 'تکرارپذیری نتایج یک آزمون.', cat: 'method' },
+            { en: 'Bias', fa: 'سوگیری', def: 'انحراف سیستماتیک از حقیقت.', cat: 'method' },
+            { en: 'Confounding Variable', fa: 'متغیر مخدوش', def: 'متغیری که بر رابطه بین متغیرها تأثیر می‌گذارد.', cat: 'method' },
+            { en: 'Control Group', fa: 'گروه کنترل', def: 'گروهی که مداخله نمی‌گیرد.', cat: 'method' },
+            { en: 'Randomization', fa: 'تصادفی‌سازی', def: 'تخصیص تصادفی نمونه‌ها.', cat: 'method' },
+            { en: 'Meta-analysis', fa: 'فراتحلیل', def: 'ترکیب آماری نتایج چندین مطالعه.', cat: 'method' },
+            { en: 'Systematic Review', fa: 'مرور نظام‌مند', def: 'مرور ساختارمند و جامع منابع.', cat: 'method' },
+            { en: 'Literature Gap', fa: 'شکاف پژوهشی', def: 'حوزه‌ای که هنوز به آن پرداخته نشده است.', cat: 'method' },
+            { en: 'Novelty', fa: 'نوآوری', def: 'جنبه جدید و بدیع یک پژوهش.', cat: 'method' },
+            { en: 'Research Question', fa: 'سوال پژوهش', def: 'پرسش اصلی که پژوهش به دنبال پاسخ آن است.', cat: 'method' },
+            { en: 'Hypothesis Testing', fa: 'آزمون فرضیه', def: 'فرآیند آماری برای رد یا تأیید فرضیه.', cat: 'method' },
+            { en: 'p-value', fa: 'مقدار p', def: 'احتمال مشاهده نتایج تحت فرضیه صفر.', cat: 'method' },
+            { en: 'Statistical Significance', fa: 'معناداری آماری', def: 'احتمال پایین بودن نتایج تحت فرضیه صفر.', cat: 'method' },
+            { en: 'Effect Size', fa: 'اندازه اثر', def: 'میزان قدرت یک رابطه یا تفاوت.', cat: 'method' },
+            { en: 'Qualitative', fa: 'کیفی', def: 'پژوهش مبتنی بر داده‌های غیرعددی.', cat: 'method' },
+            { en: 'Quantitative', fa: 'کمی', def: 'پژوهش مبتنی بر داده‌های عددی.', cat: 'method' },
+            { en: 'Mixed Methods', fa: 'روش آمیخته', def: 'ترکیب روش‌های کیفی و کمی.', cat: 'method' },
+            { en: 'Case Study', fa: 'مطالعه موردی', def: 'بررسی عمیق یک مورد خاص.', cat: 'method' },
+            { en: 'Action Research', fa: 'پژوهش کنشی', def: 'پژوهش با هدف حل یک مشکل عملی.', cat: 'method' },
+            { en: 'Grounded Theory', fa: 'نظریه زمینه‌ای', def: 'ساخت نظریه از داده‌ها.', cat: 'method' },
+            { en: 'Ethnography', fa: 'مردم‌نگاری', def: 'مطالعه فرهنگ و رفتار یک گروه.', cat: 'method' },
+
+            // اخلاق
+            { en: 'Plagiarism', fa: 'سرقت علمی', def: 'استفاده از کلام یا ایده دیگران بدون ارجاع.', cat: 'ethics' },
+            { en: 'Fabrication', fa: 'جعل داده', def: 'ساختن داده‌های غیرواقعی از صفر.', cat: 'ethics' },
+            { en: 'Falsification', fa: 'دستکاری داده', def: 'تغییر یا حذف داده‌های واقعی.', cat: 'ethics' },
+            { en: 'Self-plagiarism', fa: 'خودسرقتی', def: 'استفاده مجدد از کارهای قبلی خود بدون ارجاع.', cat: 'ethics' },
+            { en: 'Ghostwriting', fa: 'روح‌نویسی', def: 'نوشتن مقاله برای دیگری بدون ذکر نام.', cat: 'ethics' },
+            { en: 'Authorship', fa: 'مؤلفی', def: 'حق authorship بر اساس سهم علمی.', cat: 'ethics' },
+            { en: 'Corresponding Author', fa: 'نویسنده مسئول', def: 'نویسنده‌ای که مسئول مکاتبات است.', cat: 'ethics' },
+            { en: 'Conflict of Interest', fa: 'تضاد منافع', def: 'منافع شخصی که بر پژوهش تأثیر می‌گذارد.', cat: 'ethics' },
+            { en: 'Informed Consent', fa: 'رضایت آگاهانه', def: 'رضایت شرکت‌کنندگان با آگاهی کامل.', cat: 'ethics' },
+            { en: 'IRB', fa: 'کمیته اخلاق', def: 'نهاد بررسی اخلاق پژوهش.', cat: 'ethics' },
+            { en: 'Entihal', fa: 'انتحال', def: 'معادل فارسی سرقت علمی در ادب و علم.', cat: 'ethics' },
+            { en: 'Citation Manipulation', fa: 'دستکاری استنادات', def: 'ارجاع‌های غیرواقعی برای افزایش citations.', cat: 'ethics' },
+            { en: 'Salami Slicing', fa: 'تقسیم سالامی', def: 'تقسیم یک پژوهش به چند مقاله کوچک.', cat: 'ethics' },
+            { en: 'Paper Mill', fa: 'کارخانه مقاله', def: 'تولید انبوه مقالات بی‌کیفیت.', cat: 'ethics' },
+
+            // نگارش
+            { en: 'IMRAD', fa: 'ساختار مقاله', def: 'Introduction, Methods, Results, and Discussion.', cat: 'writing' },
+            { en: 'Abstract', fa: 'چکیده', def: 'خلاصه جامع مقاله.', cat: 'writing' },
+            { en: 'Citation', fa: 'ارجاع', def: 'اشاره به منبع اصلی در متن.', cat: 'writing' },
+            { en: 'Bibliography', fa: 'کتاب‌شناسی', def: 'فهرست منابع استفاده‌شده.', cat: 'writing' },
+            { en: 'Reference', fa: 'مرجع', def: 'منبعی که به آن ارجاع داده شده است.', cat: 'writing' },
+            { en: 'APA Style', fa: 'سبک APA', def: 'سبک ارجاع‌دهی انجمن روان‌شناسی آمریکا.', cat: 'writing' },
+            { en: 'IEEE Style', fa: 'سبک IEEE', def: 'سبک ارجاع‌دهی مهندسی برق و کامپیوتر.', cat: 'writing' },
+            { en: 'LaTeX', fa: 'لاتک', def: 'سیستم نگارش علمی با کیفیت بالا.', cat: 'writing' },
+            { en: 'Word', fa: 'ورد', def: 'نرم‌افزار واژه‌پرداز مایکروسافت.', cat: 'writing' },
+            { en: 'Plagiarism Checker', fa: 'بررسی سرقت علمی', def: 'ابزار تشخیص سرقت علمی.', cat: 'writing' },
+            { en: 'Turnitin', fa: 'ترنیتین', def: 'ابزار تشخیص سرقت علمی.', cat: 'writing' },
+            { en: 'iThenticate', fa: 'آی‌تنتکیت', def: 'ابزار تشخیص سرقت علمی.', cat: 'writing' },
+
+            // انتشار
+            { en: 'Retraction', fa: 'ریترکت', def: 'پس گرفتن رسمی مقاله توسط ژورنال به دلیل تخلف.', cat: 'publish' },
+            { en: 'Blacklist', fa: 'بلک‌لیست', def: 'قرار گرفتن نام در فهرست سیاه محققان یا ژورنال‌ها.', cat: 'publish' },
+            { en: 'Peer Review', fa: 'داوری همتا', def: 'فرآیند بررسی مقاله توسط متخصصان هم‌رشته.', cat: 'publish' },
+            { en: 'Double-blind Review', fa: 'داوری دو سوکور', def: 'ناشناس بودن نویسنده و داور.', cat: 'publish' },
+            { en: 'Open Access', fa: 'دسترسی آزاد', def: 'دسترسی رایگان به مقاله.', cat: 'publish' },
+            { en: 'Preprint', fa: 'پیش‌چاپ', def: 'نسخه اولیه مقاله قبل از داوری.', cat: 'publish' },
+            { en: 'DOI', fa: 'شناسه دیجیتال', def: 'شناسه یکتای مقاله.', cat: 'publish' },
+            { en: 'H-index', fa: 'شاخص اچ', def: 'شاخص ارزیابی researchers.', cat: 'publish' },
+            { en: 'Impact Factor', fa: 'ضریب تأثیر', def: 'معیار اعتبار ژورنال.', cat: 'publish' },
+            { en: 'Quartile', fa: 'چارک', def: 'دسته‌بندی ژورنال‌ها (Q1-Q4).', cat: 'publish' },
+            { en: 'Predatory Journal', fa: 'ژورنال شکارچی', def: 'ژورنال بی‌اعتبار که فقط برای کسب درآمد منتشر می‌شود.', cat: 'publish' },
+            { en: 'Erratum', fa: 'اصلاحیه', def: 'اصلاح خطا در مقاله منتشرشده.', cat: 'publish' },
+            { en: 'Corrigendum', fa: 'تصحیح', def: 'تصحیح خطا توسط نویسنده.', cat: 'publish' },
+            { en: 'Journal', fa: 'ژورنال', def: 'نشریه علمی دوره‌ای.', cat: 'publish' },
+            { en: 'Conference', fa: 'کنفرانس', def: 'رویداد علمی برای ارائه مقالات.', cat: 'publish' },
+
+            // MEMS/NEMS
+            { en: 'MEMS', fa: 'میکروالکترومکانیکال', def: 'سیستم‌های میکروالکترومکانیکی.', cat: 'mems' },
+            { en: 'NEMS', fa: 'نانوالکترومکانیکال', def: 'سیستم‌های نانوالکترومکانیکی.', cat: 'mems' },
+            { en: 'Cleanroom', fa: 'اتاق تمیز', def: 'محیط کنترل‌شده برای ساخت میکرو/نانو.', cat: 'mems' },
+            { en: 'Lithography', fa: 'لیتوگرافی', def: 'فرآیند انتقال الگو به ویفر.', cat: 'mems' },
+            { en: 'Etching', fa: 'اچینگ', def: 'حذف انتخابی مواد.', cat: 'mems' },
+            { en: 'Deposition', fa: 'لایه‌نشانی', def: 'افزودن لایه نازک به سطح.', cat: 'mems' },
+            { en: 'Wafer Bonding', fa: 'پیوند ویفر', def: 'اتصال دو ویفر.', cat: 'mems' },
+            { en: 'Resonator', fa: 'تشدیدگر', def: 'ساختار نوسانی در MEMS/NEMS.', cat: 'mems' },
+            { en: 'Cantilever', fa: 'تیر یک‌سر', def: 'ساختار تیری یک‌سر آزاد.', cat: 'mems' },
+            { en: 'Piezoelectric', fa: 'پیزوالکتریک', def: 'تبدیل انرژی مکانیکی به الکتریکی.', cat: 'mems' },
+            { en: 'Energy Harvester', fa: 'برداشت‌کننده انرژی', def: 'دستگاه تبدیل انرژی محیطی به الکتریکی.', cat: 'mems' },
+            { en: 'BioMEMS', fa: 'زیست‌ممز', def: 'MEMS برای کاربردهای زیستی.', cat: 'mems' },
+            { en: 'Lab-on-a-Chip', fa: 'آزمایشگاه روی تراشه', def: 'ادغام آزمایش‌های زیستی در یک تراشه.', cat: 'mems' },
+            { en: '2D Materials NEMS', fa: 'NEMS مواد دوبعدی', def: 'NEMS مبتنی بر گرافن و مواد دوبعدی.', cat: 'mems' },
+            { en: 'DRIE', fa: 'اچینگ یونی واکنشی عمیق', def: 'فرآیند اچینگ عمیق با نسبت ابعاد بالا.', cat: 'mems' },
+            { en: 'Surface Micromachining', fa: 'میکروماشین‌کاری سطحی', def: 'ساخت لایه‌های فداشونده روی سطح.', cat: 'mems' },
+            { en: 'Bulk Micromachining', fa: 'میکروماشین‌کاری حجمی', def: 'حذف حجمی از ویفر سیلیکونی.', cat: 'mems' }
+        ];
+
+        const glossaryGrid = document.getElementById('glossary-grid');
+        const glossarySearch = document.getElementById('glossary-search');
+        const glossaryCategories = document.querySelectorAll('.glossary-category');
+
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        const categoryNames = {
+            all: 'همه',
+            ethics: 'اخلاق',
+            method: 'روش‌شناسی',
+            writing: 'نگارش',
+            publish: 'انتشار',
+            mems: 'MEMS/NEMS'
+        };
+
+        function renderGlossary() {
+            const filtered = glossaryData.filter(item => {
+                const matchSearch = item.en.toLowerCase().includes(currentSearch.toLowerCase()) || 
+                                    item.fa.includes(currentSearch) || 
+                                    item.def.includes(currentSearch);
+                const matchCat = currentCategory === 'all' || item.cat === currentCategory;
+                return matchSearch && matchCat;
+            });
+
+            glossaryGrid.innerHTML = '';
+            if (filtered.length === 0) {
+                glossaryGrid.innerHTML = '<p style="color: var(--text-dim); grid-column: 1/-1; text-align: center;">موردی یافت نشد.</p>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('glossary-item');
+                div.innerHTML = `
+                    <div class="term-en">${item.en}</div>
+                    <div class="term-fa">${item.fa}</div>
+                    <div class="term-def">${item.def}</div>
+                    <span class="term-cat">${categoryNames[item.cat] || item.cat}</span>
+                `;
+                glossaryGrid.appendChild(div);
+            });
+        }
+
+        glossarySearch.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderGlossary();
+        });
+
+        glossaryCategories.forEach(cat => {
+            cat.addEventListener('click', () => {
+                glossaryCategories.forEach(c => c.classList.remove('active'));
+                cat.classList.add('active');
+                currentCategory = cat.dataset.cat;
+                renderGlossary();
+                playClick();
+            });
+        });
+
+        // ================= شروع =================
+        window.addEventListener('load', () => {
+            resizeHeroCanvas();
+            initHeroParticles();
+            animateHero();
+            renderGlossary();
+        });
+        window.addEventListener('resize', () => {
+            resizeHeroCanvas();
+            initHeroParticles();
+        });
+
+        document.body.addEventListener('click', initAudio, { once: true });
+
+    </script>
+</body>
+</html>

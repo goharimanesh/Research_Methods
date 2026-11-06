@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جلسه ۱: درآمدی بر پژوهش و اخلاق علمی | روش پژوهش</title>
+    
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* ================= متغیرها و تنظیمات پایه ================= */
+        :root {
+            --primary: #00d4aa;
+            --secondary: #06b6d4;
+            --tertiary: #a855f7;
+            --gold: #ffb700;
+            --success: #22c55e;
+            --danger: #ff4757;
+            --pink: #ec4899;
+            --dark: #050818;
+            --darker: #020410;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text: #e8eef7;
+            --text-dim: #9aa7bd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* ================= افکت‌های پس‌زمینه ================= */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -2;
+            opacity: 0.3;
+            animation: floatOrb 15s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; right: -100px; }
+        .orb-2 { width: 350px; height: 350px; background: var(--tertiary); bottom: -50px; left: -50px; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: var(--gold); top: 50%; left: 40%; animation-delay: -10s; opacity: 0.15; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ================= هدر ثابت ================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            background: rgba(5, 8, 24, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 100;
+            height: 70px;
+        }
+
+        .header-names {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .header-names .name {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .header-names .divider {
+            color: var(--card-border);
+            font-size: 1.2rem;
+        }
+        .header-names .course {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-right: 1rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+        .icon-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .icon-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+
+        /* ================= نوار پیشرفت مبحث ================= */
+        .topic-nav {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 4, 16, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            z-index: 99;
+            border-bottom: 1px solid var(--card-border);
+            scrollbar-width: none;
+        }
+        .topic-nav::-webkit-scrollbar { display: none; }
+        
+        .topic-pill {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-dim);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .topic-pill.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border-color: transparent;
+            font-weight: bold;
+        }
+        .topic-pill.done {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* ================= نوار پیشرفت درصد ================= */
+        .progress-bar-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--gold), var(--tertiary));
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* ================= کانتینر اسلاید ================= */
+        .slides-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 70px - 45px);
+            margin-top: 115px;
+            overflow: hidden;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 5%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideUp 0.6s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .slide-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s linear infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .slide-content p, .slide-content li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+        }
+        .slide-content ul {
+            list-style: none;
+            padding-right: 1rem;
+        }
+        .slide-content ul li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1rem;
+            margin-right: -1rem;
+        }
+
+        /* کارت‌های داخل اسلاید */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0,212,170,0.1);
+        }
+        .card h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        /* ================= تکنیک‌های ویژه ================= */
+        .img-clickable {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 12px;
+            max-width: 100%;
+            border: 1px solid var(--card-border);
+        }
+        .img-clickable:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+
+        .concept-word {
+            color: var(--gold);
+            border-bottom: 1px dashed var(--gold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .concept-word:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        b {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* ================= شبیه‌سازها ================= */
+        .sim-container {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .sim-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .sim-control-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .sim-control-group label {
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: var(--card-border);
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .sim-result {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .info-card .label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        .info-card .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* ================= نقشه ذهنی تعاملی ================= */
+        .mindmap-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .mindmap-node {
+            position: absolute;
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 5;
+            border: 2px solid transparent;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .mindmap-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .node-center { background: var(--gold); color: var(--dark); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .node-center:hover { transform: translate(-50%, -50%) scale(1.1); }
+        
+        .node-1 { background: rgba(0, 212, 170, 0.2); border-color: var(--primary); color: var(--primary); top: 15%; left: 15%; }
+        .node-2 { background: rgba(168, 85, 247, 0.2); border-color: var(--tertiary); color: var(--tertiary); top: 15%; right: 15%; }
+        .node-3 { background: rgba(255, 183, 0, 0.2); border-color: var(--gold); color: var(--gold); bottom: 15%; left: 15%; }
+        .node-4 { background: rgba(236, 72, 153, 0.2); border-color: var(--pink); color: var(--pink); bottom: 15%; right: 15%; }
+        .node-5 { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); top: 50%; left: 5%; transform: translateY(-50%); }
+
+        .mindmap-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .mindmap-svg line {
+            stroke: var(--card-border);
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+        }
+
+        .mindmap-popup {
+            position: absolute;
+            background: var(--darker);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+            width: 250px;
+            z-index: 20;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .mindmap-popup.active { display: block; }
+        .mindmap-popup h4 { color: var(--gold); margin-bottom: 0.5rem; }
+
+        /* ================= تمرین‌ها ================= */
+        .exercise-block {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .ex-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .ex-num {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--dark);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .ex-yellow .ex-header { color: var(--gold); }
+        .ex-yellow .ex-num { background: var(--gold); }
+        .ex-green .ex-header { color: var(--success); }
+        .ex-green .ex-num { background: var(--success); }
+        .ex-purple .ex-header { color: var(--tertiary); }
+        .ex-purple .ex-num { background: var(--tertiary); }
+        .ex-red .ex-header { color: var(--danger); }
+        .ex-red .ex-num { background: var(--danger); }
+
+        .email-banner {
+            background: linear-gradient(90deg, rgba(0,212,170,0.1), rgba(255,183,0,0.1));
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .email-banner p { font-size: 0.9rem; margin: 0; color: var(--text-dim); }
+        .email-banner strong { color: var(--gold); }
+
+        /* ================= تب‌های کد ================= */
+        .code-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .code-tab {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-dim);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .code-tab.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+        .code-content {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.85rem;
+            direction: ltr;
+            text-align: left;
+            display: none;
+        }
+        .code-content.active { display: block; }
+        .code-content .keyword { color: #569cd6; }
+        .code-content .string { color: #ce9178; }
+        .code-content .comment { color: #6a9955; }
+        .code-content .func { color: #dcdcaa; }
+
+        /* ================= مودال ================= */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            background: var(--darker);
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 10;
+        }
+        .modal-caption {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-dim);
+        }
+
+        .concept-modal-content {
+            max-width: 600px;
+            text-align: right;
+        }
+        .concept-modal-content h3 { color: var(--gold); margin-bottom: 1rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; }
+        .concept-modal-content h4 { color: var(--primary); margin-top: 1rem; margin-bottom: 0.3rem; font-size: 0.95rem; }
+        .concept-modal-content p { font-size: 0.9rem; line-height: 1.7; color: var(--text-dim); }
+
+        /* ================= ناوبری پایین ================= */
+        .nav-bottom {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+            background: rgba(2,4,16,0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: var(--primary); color: var(--dark); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        
+        .slide-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .dots-nav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--card-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .dot.active { background: var(--primary); transform: scale(1.3); box-shadow: 0 0 10px var(--primary); }
+
+        .podcast-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(2,4,16,0.9);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 0.8rem;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            max-width: 300px;
+        }
+        .podcast-widget img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .podcast-widget audio {
+            height: 30px;
+            width: 180px;
+        }
+        .podcast-widget .podcast-label {
+            font-size: 0.7rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0.5rem 1rem; flex-direction: column; height: auto; gap: 0.5rem; }
+            .header-names { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+            .header-names .name { font-size: 0.85rem; }
+            .topic-nav { top: 110px; }
+            .slides-container { margin-top: 155px; height: calc(100vh - 110px - 45px); }
+            .slide-content { padding: 1.5rem; }
+            .slide-content h2 { font-size: 1.3rem; }
+            .slide-content p, .slide-content li { font-size: 0.95rem; }
+            .mindmap-container { height: 300px; }
+            .mindmap-node { font-size: 0.75rem; padding: 0.5rem 0.8rem; }
+            .dots-nav { display: none; }
+            .podcast-widget { bottom: 10px; right: 10px; max-width: 250px; }
+            .podcast-widget audio { width: 130px; }
+            .nav-bottom { bottom: 60px; }
+        }
+
+        @media print {
+            body { background: white; color: black; overflow: visible; height: auto; }
+            header, .topic-nav, .dots-nav, .nav-bottom, .progress-bar-container, .podcast-widget, .glow-orb, #particle-canvas { display: none !important; }
+            .slides-container { height: auto; margin-top: 0; overflow: visible; }
+            .slide { position: relative; opacity: 1; visibility: visible; page-break-after: always; height: auto; padding: 1rem; }
+            .slide-content { background: white; border: 1px solid #ccc; box-shadow: none; backdrop-filter: none; }
+            .slide-content h2 { color: black; background: none; -webkit-text-fill-color: black; }
+            .slide-content p, .slide-content li { color: black; }
+            b { color: black; }
+            .card { background: #f5f5f5; border-color: #ccc; }
+            .card h3 { color: black; }
+            .card p { color: #333; }
+            .code-content { background: #f0f0f0; color: black; border: 1px solid #ccc; }
+            .sim-container { background: #f5f5f5; border-color: #ccc; }
+            .mindmap-container { background: #f5f5f5; border-color: #ccc; }
+            .exercise-block { background: #f5f5f5; border-color: #ccc; }
+            .email-banner { background: #f5f5f5; border-color: #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <header>
+        <div class="header-names">
+            <span class="name">دکتر علی کوچی</span>
+            <span class="divider">|</span>
+            <span class="name">دکتر مسعود گوهری منش</span>
+            <span class="course">— روش پژوهش</span>
+        </div>
+        <div class="header-controls">
+            <button class="icon-btn" id="sound-toggle" title="صدا"><i class="fa-solid fa-volume-high"></i></button>
+            <button class="icon-btn" id="music-toggle" title="موسیقی"><i class="fa-solid fa-music"></i></button>
+            <button class="icon-btn" id="print-btn" title="چاپ"><i class="fa-solid fa-print"></i></button>
+            <button class="icon-btn" id="fullscreen-btn" title="تمام‌صفحه"><i class="fa-solid fa-expand"></i></button>
+        </div>
+    </header>
+
+    <div class="topic-nav" id="topic-nav"></div>
+
+    <div class="slides-container" id="slides-container">
+
+        <!-- اسلاید ۱: عنوان -->
+        <div class="slide active" data-topic="مقدمه">
+            <div class="slide-content" style="text-align: center;">
+                <p style="font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem;">بسم الله الرحمن الرحیم</p>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">روش پژوهش</h2>
+                <p style="font-size: 1.3rem; color: var(--text); margin-bottom: 2rem;">جلسه ۱: درآمدی بر پژوهش، اخلاق علمی و تفکیک مفاهیم</p>
+                
+                <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,183,0,0.05); border-radius: 16px; border: 1px solid var(--gold);">
+                    <p style="font-size: 1rem; color: var(--text-dim); margin-bottom: 0.5rem;">معادله یادگیری از داده‌ها — قلب پژوهش علمی</p>
+                    <p style="font-size: 1.2rem; color: var(--gold); font-family: 'Cambria Math', serif; direction: ltr;">\[
+                        \hat{f} = \arg\min_{f \in \mathcal{H}} \left( \frac{1}{N} \sum_{i=1}^{N} L(y_i, f(x_i)) + \lambda \|f\|^2 \right)
+                    \]</p>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">کشف الگو از داده‌های تجربی — همان هدف والای پژوهش</p>
+                </div>
+
+                <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap;">
+                    <div>
+                        <p style="font-size: 1rem; color: var(--primary); font-weight: bold;">دکتر علی کوچی</p>
+                        <p style="font-size: 0.8rem; color: var(--text-dim);">دانشیار گروه مهندسی مکانیک</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 1rem; color: var(--primary); font-weight: bold;">دکتر مسعود گوهری منش</p>
+                        <p style="font-size: 0.8rem; color: var(--text-dim);">دانشیار گروه مهندسی مکانیک</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 1.5rem;">دانشگاه تربت حیدریه — نیمسال اول</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۲: اهداف -->
+        <div class="slide" data-topic="اهداف">
+            <div class="slide-content">
+                <h2>اهداف یادگیری جلسه</h2>
+                <ul>
+                    <li>آشنایی با مفهوم <b>Research</b> و تفاوت آن با کار روزمره</li>
+                    <li>تفکیک دقیق «پژوهش»، «گزارش»، «مقاله»، «تز» و «رساله»</li>
+                    <li>درک <b>هدف پژوهش</b> (بنیادی، کاربردی، توسعه‌ای)</li>
+                    <li>اهمیت <b>مرور پیشینه</b> — چرا نباید چرخ را دوباره اختراع کنیم</li>
+                    <li>درک عمیق اخلاق پژوهش با نگاهی به تاریخ ایران (مفهوم <span class="concept-word" data-concept="entihal">انتحال</span>)</li>
+                    <li>شناخت مصادیق بی‌اخلاقی پژوهشی و عواقب آن (<span class="concept-word" data-concept="retraction">Retraction</span> و <span class="concept-word" data-concept="blacklist">Blacklist</span>)</li>
+                    <li>آشنایی با ساختار استاندارد مقاله علمی (<b>IMRAD</b>)</li>
+                </ul>
+                <img src="images/hero-research-intro.png" alt="مقدمه پژوهش" class="img-clickable" data-caption="مقدمه‌ای بر پژوهش" style="max-width: 60%; margin: 1.5rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۳: انگیزه -->
+        <div class="slide" data-topic="انگیزه">
+            <div class="slide-content">
+                <h2>پژوهش چیست و چرا مهم است؟</h2>
+                <p>پژوهش یک فرآیند <b>systematic</b>، <b>objective</b> و <b>reproducible</b> برای کشف حقیقت است.</p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3><i class="fa-solid fa-newspaper"></i> روزنامه‌نگاری</h3>
+                        <p>گزارش یک رویداد بدون تحلیل عمیق و بدون نیاز به بازتولید.</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-flask"></i> پژوهش</h3>
+                        <p>کشف روابط علت و معلولی، با روش‌مندی دقیق و قابلیت بازتولید.</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fa-solid fa-chart-line"></i> اهمیت</h3>
+                        <p>پژوهش موتور پیشرفت علم، فناوری و حل مسائل جامعه است.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--text-dim); font-size: 0.95rem;">تفاوت اصلی: پژوهش به دنبال «چرا» و «چگونه» است، نه فقط «چه».</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۴: تعریف پژوهش -->
+        <div class="slide" data-topic="تعریف">
+            <div class="slide-content">
+                <h2>تعریف پژوهش (Research)</h2>
+                <p>پژوهش یک تلاش <b>systematic</b> و <b>objective</b> برای یافتن پاسخ به یک سوال مشخص است که منجر به دانش جدید می‌شود.</p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3><b>Systematic</b></h3>
+                        <p>فرآیند منظم و مرحله‌به‌مرحله با روش‌شناسی مشخص.</p>
+                    </div>
+                    <div class="card">
+                        <h3><b>Objective</b></h3>
+                        <p>بدون سوگیری شخصی، مبتنی بر شواهد و داده‌ها.</p>
+                    </div>
+                    <div class="card">
+                        <h3><b>Reproducible</b></h3>
+                        <p>نتایج باید توسط دیگران قابل بازتولید باشد.</p>
+                    </div>
+                </div>
+                <img src="images/research-definition.png" alt="تعریف پژوهش" class="img-clickable" data-caption="تعریف پژوهش" style="max-width: 50%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۵: هدف پژوهش (جدید) -->
+        <div class="slide" data-topic="هدف پژوهش">
+            <div class="slide-content">
+                <h2>هدف پژوهش (Research Objective)</h2>
+                <p>هر پژوهش باید یک <b>هدف مشخص</b> داشته باشد. هدف پژوهش تعیین می‌کند که ما به دنبال چه چیزی هستیم و چرا.</p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>پژوهش بنیادی (Basic)</h3>
+                        <p>هدف: کشف قوانین بنیادی طبیعت. بدون کاربرد فوری. مثال: مطالعه خواص گرافن.</p>
+                    </div>
+                    <div class="card">
+                        <h3>پژوهش کاربردی (Applied)</h3>
+                        <p>هدف: حل یک مشکل عملی. مثال: ساخت حسگر گرافنی برای تشخیص گاز.</p>
+                    </div>
+                    <div class="card">
+                        <h3>پژوهش توسعه‌ای (Developmental)</h3>
+                        <p>هدف: بهبود یک محصول یا فرآیند موجود. مثال: افزایش حساسیت حسگر گرافنی.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--gold); font-size: 0.95rem;">هدف پژوهش باید <b>SMART</b> باشد: Specific, Measurable, Achievable, Relevant, Time-bound.</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۶: اهمیت مرور پیشینه (جدید) -->
+        <div class="slide" data-topic="مرور پیشینه">
+            <div class="slide-content">
+                <h2>چرا نباید چرخ را دوباره اختراع کنیم؟</h2>
+                <p>یکی از مهم‌ترین اهداف پژوهش، <b>مرور پیشینه (Literature Review)</b> است. اگر کارهای گذشتگان را بررسی نکنیم، ممکن است:</p>
+                <ul>
+                    <li>پژوهشی را انجام دهیم که قبلاً انجام شده است (<b>Duplication</b>).</li>
+                    <li>منابع و بودجه را هدر دهیم.</li>
+                    <li>فرصت نوآوری واقعی را از دست بدهیم.</li>
+                </ul>
+                <div style="background: rgba(255,183,0,0.05); padding: 1rem; border-radius: 12px; border: 1px solid var(--gold); margin-top: 1rem;">
+                    <p style="color: var(--gold); font-weight: bold;">مثال کلاسیک: چرخ</p>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">اگر مخترع چرخ، کارهای گذشتگان (استفاده از غلتک) را بررسی نمی‌کرد، هرگز به ایده چرخ نمی‌رسید. مرور پیشینه، نقطه شروع نوآوری است.</p>
+                </div>
+                <p style="margin-top: 1rem; color: var(--text-dim); font-size: 0.95rem;">مرور پیشینه به ما می‌گوید: «الان کجای مسیر هستیم» و «چه شکاف‌هایی (Gaps) وجود دارد».</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۷: نقشه ذهنی تعاملی -->
+        <div class="slide" data-topic="تفکیک مفاهیم">
+            <div class="slide-content">
+                <h2>تفکیک مفاهیم: پژوهش، گزارش، مقاله، تز، رساله</h2>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">روی هر گره کلیک کنید تا تعریف و ویژگی‌های آن را ببینید.</p>
+                
+                <div class="mindmap-container" id="mindmap">
+                    <svg class="mindmap-svg" id="mindmap-svg"></svg>
+                    
+                    <div class="mindmap-node node-center" data-node="center">مفاهیم پژوهشی</div>
+                    
+                    <div class="mindmap-node node-1" data-node="research">پژوهش (Research)</div>
+                    <div class="mindmap-node node-2" data-node="report">گزارش (Report)</div>
+                    <div class="mindmap-node node-3" data-node="paper">مقاله (Paper)</div>
+                    <div class="mindmap-node node-4" data-node="thesis">تز (Thesis)</div>
+                    <div class="mindmap-node node-5" data-node="dissertation">رساله (Dissertation)</div>
+
+                    <div class="mindmap-popup" id="mindmap-popup">
+                        <h4 id="popup-title"></h4>
+                        <p id="popup-desc"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۸: شبیه‌ساز تشخیص مفهوم -->
+        <div class="slide" data-topic="شبیه‌ساز ۱">
+            <div class="slide-content">
+                <h2>شبیه‌ساز ۱: کدام یک چیست؟</h2>
+                <p>متن زیر را بخوانید و تشخیص دهید متعلق به کدام نوع است.</p>
+                <div class="sim-container">
+                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
+                        «در این مطالعه، اثر پارامترهای مختلف بر روی بازدهی توربین بررسی شد. نتایج نشان داد که افزایش دما تا ۵۰۰ درجه سانتی‌گراد باعث بهبود ۱۵ درصدی بازدهی می‌شود.»
+                    </p>
+                    <div class="sim-controls" style="margin-top: 1rem;">
+                        <button class="tab-btn sim-option" data-answer="paper" style="padding: 0.8rem;">مقاله (Paper)</button>
+                        <button class="tab-btn sim-option" data-answer="report" style="padding: 0.8rem;">گزارش (Report)</button>
+                        <button class="tab-btn sim-option" data-answer="thesis" style="padding: 0.8rem;">تز (Thesis)</button>
+                    </div>
+                    <p id="sim-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۹: IMRAD -->
+        <div class="slide" data-topic="IMRAD">
+            <div class="slide-content">
+                <h2>ساختار مقاله علمی: IMRAD</h2>
+                <div class="cards-grid">
+                    <div class="card"><h3>I - Introduction</h3><p>مقدمه، بیان مسئله، اهداف</p></div>
+                    <div class="card"><h3>M - Methods</h3><p>روش‌شناسی، ابزارها، داده‌ها</p></div>
+                    <div class="card"><h3>R - Results</h3><p>نتایج، جداول، نمودارها</p></div>
+                    <div class="card"><h3>A - and Discussion</h3><p>بحث، تفسیر، نتیجه‌گیری</p></div>
+                </div>
+                <img src="images/imrad-structure.png" alt="IMRAD" class="img-clickable" data-caption="ساختار IMRAD" style="max-width: 50%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۰: شبیه‌ساز IMRAD -->
+        <div class="slide" data-topic="شبیه‌ساز ۲">
+            <div class="slide-content">
+                <h2>شبیه‌ساز ۲: کدام بخش مقاله؟</h2>
+                <div class="sim-container">
+                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
+                        «داده‌ها با استفاده از نرم‌افزار MATLAB و روش المان محدود تحلیل شدند. مش‌بندی با ۱۰۰۰ المان انجام گرفت.»
+                    </p>
+                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="tab-btn imrad-option" data-answer="intro" style="padding: 0.8rem;">Introduction</button>
+                        <button class="tab-btn imrad-option" data-answer="methods" style="padding: 0.8rem;">Methods</button>
+                        <button class="tab-btn imrad-option" data-answer="results" style="padding: 0.8rem;">Results</button>
+                        <button class="tab-btn imrad-option" data-answer="discussion" style="padding: 0.8rem;">Discussion</button>
+                    </div>
+                    <p id="imrad-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۱: شبیه‌ساز هدف پژوهش (جدید) -->
+        <div class="slide" data-topic="شبیه‌ساز ۳">
+            <div class="slide-content">
+                <h2>شبیه‌ساز ۳: هدف پژوهش چیست؟</h2>
+                <div class="sim-container">
+                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
+                        «هدف این پژوهش، ساخت یک حسگر گرافنی برای تشخیص گاز متان در دمای اتاق است.»
+                    </p>
+                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="tab-btn objective-option" data-answer="basic" style="padding: 0.8rem;">بنیادی (Basic)</button>
+                        <button class="tab-btn objective-option" data-answer="applied" style="padding: 0.8rem;">کاربردی (Applied)</button>
+                        <button class="tab-btn objective-option" data-answer="developmental" style="padding: 0.8rem;">توسعه‌ای (Developmental)</button>
+                    </div>
+                    <p id="objective-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۲: شبیه‌ساز مرور پیشینه (جدید) -->
+        <div class="slide" data-topic="شبیه‌ساز ۴">
+            <div class="slide-content">
+                <h2>شبیه‌ساز ۴: کدام یک «مرور پیشینه» است؟</h2>
+                <div class="sim-container">
+                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
+                        «مطالعات پیشین نشان داده‌اند که حسگرهای گرافنی حساسیت بالایی دارند (Smith et al., 2020). با این حال، هیچ مطالعه‌ای تاکنون اثر دما را بر حساسیت آن‌ها بررسی نکرده است.»
+                    </p>
+                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="tab-btn review-option" data-answer="yes" style="padding: 0.8rem;">بله، این یک مرور پیشینه است</button>
+                        <button class="tab-btn review-option" data-answer="no" style="padding: 0.8rem;">خیر، این یک مرور پیشینه نیست</button>
+                    </div>
+                    <p id="review-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۳: اخلاق و انتحال -->
+        <div class="slide" data-topic="اخلاق و انتحال">
+            <div class="slide-content">
+                <h2>اخلاق پژوهش: نگاهی به تاریخ ایران</h2>
+                <p>مفهوم <span class="concept-word" data-concept="entihal">انتحال</span> در ادب و علم ایرانی ریشه‌ای عمیق دارد. انتحال به معنای نسبت دادن کلام یا اثر دیگری به خود است.</p>
+                <ul>
+                    <li>در نسخه‌های خطی، کاتبان گاهی نام خود را به جای مولف اصلی می‌نوشتند.</li>
+                    <li>علمای بزرگ ایرانی مانند <b>خواجه نصیرالدین طوسی</b> بر امانت‌داری در نقل قول تأکید داشتند.</li>
+                    <li>انتحال نه تنها یک تخلف علمی، بلکه یک تخلف اخلاقی و فرهنگی است.</li>
+                </ul>
+                <img src="images/ethics-ancient-iran.png" alt="اخلاق در ایران باستان" class="img-clickable" data-caption="اخلاق پژوهش در ایران" style="max-width: 40%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۴: اصول اخلاق پژوهش -->
+        <div class="slide" data-topic="اصول اخلاق">
+            <div class="slide-content">
+                <h2>اصول اخلاق پژوهش</h2>
+                <div class="cards-grid">
+                    <div class="card"><h3><i class="fa-solid fa-check"></i> صداقت</h3><p>گزارش صادقانه داده‌ها و نتایج</p></div>
+                    <div class="card"><h3><i class="fa-solid fa-handshake"></i> امانت‌داری</h3><p>ارجاع دقیق به منابع دیگران</p></div>
+                    <div class="card"><h3><i class="fa-solid fa-scale-balanced"></i> بی‌طرفی</h3><p>عدم سوگیری در تحلیل و تفسیر</p></div>
+                    <div class="card"><h3><i class="fa-solid fa-users"></i> احترام</h3><p>احترام به حقوق شرکت‌کنندگان</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۵: مصادیق بی‌اخلاقی -->
+        <div class="slide" data-topic="مصادیق">
+            <div class="slide-content">
+                <h2>مصادیق بی‌اخلاقی پژوهشی</h2>
+                <ul>
+                    <li><b>Plagiarism</b> (سرقت علمی): کپی کردن متن یا ایده بدون ارجاع.</li>
+                    <li><b>Fabrication</b> (جعل داده): ساختن داده‌های غیرواقعی.</li>
+                    <li><b>Falsification</b> (دستکاری داده): تغییر یا حذف داده‌های واقعی.</li>
+                    <li><b>Self-plagiarism</b> (خودسرقتی): استفاده مجدد از کارهای قبلی خود بدون ارجاع.</li>
+                    <li>سرقت ایده: نسبت دادن ایده دیگران به خود.</li>
+                </ul>
+                <img src="images/plagiarism-types.png" alt="انواع سرقت علمی" class="img-clickable" data-caption="مصادیق بی‌اخلاقی" style="max-width: 50%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۶: شبیه‌ساز تشخیص بی‌اخلاقی -->
+        <div class="slide" data-topic="شبیه‌ساز ۵">
+            <div class="slide-content">
+                <h2>شبیه‌ساز ۵: تشخیص بی‌اخلاقی پژوهشی</h2>
+                <div class="sim-container">
+                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
+                        «یک researcher داده‌های آزمایشگاهی خود را طوری تغییر داد که نتایج معنادار شوند.»
+                    </p>
+                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="tab-btn ethics-option" data-answer="fabrication" style="padding: 0.8rem;">Fabrication</button>
+                        <button class="tab-btn ethics-option" data-answer="falsification" style="padding: 0.8rem;">Falsification</button>
+                        <button class="tab-btn ethics-option" data-answer="plagiarism" style="padding: 0.8rem;">Plagiarism</button>
+                    </div>
+                    <p id="ethics-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۷: ریترکت -->
+        <div class="slide" data-topic="ریترکت">
+            <div class="slide-content">
+                <h2>عواقب بی‌اخلاقی: ریترکت مقاله (Retraction)</h2>
+                <p><span class="concept-word" data-concept="retraction">Retraction</span> به معنای پس گرفتن رسمی یک مقاله توسط ژورنال به دلیل کشف تخلف علمی است.</p>
+                <div class="cards-grid">
+                    <div class="card"><h3>دلایل</h3><p>جعل داده، سرقت علمی، خطاهای جدی</p></div>
+                    <div class="card"><h3>پیامد</h3><p>از دست رفتن اعتبار، ممنوعیت از انتشار</p></div>
+                    <div class="card"><h3>مثال واقعی</h3><p>ریترکت مقالات متعدد در حوزه مهندسی به دلیل دستکاری داده</p></div>
+                </div>
+                <img src="images/retraction.png" alt="ریترکت" class="img-clickable" data-caption="ریترکت مقاله" style="max-width: 40%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۸: بلک‌لیست -->
+        <div class="slide" data-topic="بلک‌لیست">
+            <div class="slide-content">
+                <h2>عواقب بی‌اخلاقی: بلک‌لیست شدن (Blacklisting)</h2>
+                <p><span class="concept-word" data-concept="blacklist">Blacklisting</span> به معنای قرار گرفتن نام محقق یا ژورنال در فهرست سیاه است.</p>
+                <ul>
+                    <li>ژورنال‌های <b>Predatory</b> (شکارچی) در لیست سیاه قرار می‌گیرند.</li>
+                    <li>محققان متخلف ممکن است از دریافت گرانت و انتشار در ژورنال‌های معتبر محروم شوند.</li>
+                    <li>سازمان‌هایی مانند Clarivate و Scopus لیست‌های سیاه منتشر می‌کنند.</li>
+                </ul>
+                <img src="images/blacklist.png" alt="بلک‌لیست" class="img-clickable" data-caption="بلک‌لیست شدن" style="max-width: 40%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۹: حل گام‌به‌گام -->
+        <div class="slide" data-topic="حل گام‌به‌گام">
+            <div class="slide-content">
+                <h2>حل گام‌به‌گام: یک مثال واقعی از ریترکت</h2>
+                <p>مقاله‌ای در حوزه مهندسی مکانیک که به دلیل <b>Falsification</b> داده‌ها ریترکت شد.</p>
+                <ul>
+                    <li><b>گام ۱:</b> شناسایی تناقض در داده‌های ارائه‌شده.</li>
+                    <li><b>گام ۲:</b> بررسی توسط تیم داوران و کمیته اخلاق.</li>
+                    <li><b>گام ۳:</b> اعلام ریترکت توسط ژورنال.</li>
+                    <li><b>گام ۴:</b> محرومیت researcher از انتشار در آن ژورنال.</li>
+                </ul>
+                <p style="color: var(--gold); margin-top: 1rem;">درس: اخلاق در پژوهش یک انتخاب نیست، یک ضرورت است.</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۲۰: تعامل -->
+        <div class="slide" data-topic="تعامل">
+            <div class="slide-content" style="text-align: center;">
+                <h2>سوال کلاسی</h2>
+                <p style="font-size: 1.3rem; margin: 2rem 0;">آیا می‌توان از داده‌های یک مقاله دیگر استفاده کرد؟</p>
+                <p style="color: var(--text-dim);">به پاسخ فکر کنید و سپس اسلاید بعدی را ببینید.</p>
+                <button class="tab-btn" id="reveal-answer" style="margin-top: 1rem; padding: 1rem 2rem; font-size: 1rem;">نمایش پاسخ</button>
+            </div>
+        </div>
+
+        <!-- اسلاید ۲۱: پاسخ تعاملی -->
+        <div class="slide" data-topic="پاسخ">
+            <div class="slide-content">
+                <h2>پاسخ</h2>
+                <p>بله، اما با شرایط:</p>
+                <ul>
+                    <li>ارجاع دقیق به منبع اصلی</li>
+                    <li>عدم استفاده از داده‌های محرمانه بدون اجازه</li>
+                    <li>تحلیل مجدد و تفسیر مستقل</li>
+                </ul>
+                <p style="color: var(--gold); margin-top: 1rem;">استفاده بدون ارجاع = <b>Plagiarism</b></p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۲۲: نقشه راه -->
+        <div class="slide" data-topic="نقشه راه">
+            <div class="slide-content">
+                <h2>نقشه راه پژوهش (نمای کلی دوره)</h2>
+                <img src="images/research-roadmap.png" alt="نقشه راه" class="img-clickable" data-caption="نقشه راه پژوهش" style="max-width: 70%; margin: 1rem auto; display: block;">
+                <p style="text-align: center; color: var(--text-dim);">از انتخاب موضوع تا انتشار مقاله — ۸ جلسه</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۲۳: کد MATLAB + Python -->
+        <div class="slide" data-topic="کد">
+            <div class="slide-content">
+                <h2>کد MATLAB + Python</h2>
+                <p>نمونه کد ساده برای محاسبه میانگین داده‌های تجربی.</p>
+                <div class="code-tabs">
+                    <button class="code-tab active" data-lang="matlab">MATLAB</button>
+                    <button class="code-tab" data-lang="python">Python</button>
+                </div>
+                <div class="code-content active" id="code-matlab">
+<span class="comment">% محاسبه میانگین داده‌های تجربی</span>
+data = [12.5, 13.1, 12.8, 13.5, 12.9];
+mean_val = mean(data);
+std_val = std(data);
+fprintf(<span class="string">'Mean: %.2f\n'</span>, mean_val);
+fprintf(<span class="string">'STD: %.2f\n'</span>, std_val);
+                </div>
+                <div class="code-content" id="code-python">
+<span class="comment"># محاسبه میانگین داده‌های تجربی</span>
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+data = [12.5, 13.1, 12.8, 13.5, 12.9]
+mean_val = np.mean(data)
+std_val = np.std(data)
+print(<span class="string">f"Mean: {mean_val:.2f}"</span>)
+print(<span class="string">f"STD: {std_val:.2f}"</span>)
+                </div>
+                <img src="images/matlab-python-code.png" alt="کد" class="img-clickable" data-caption="MATLAB و Python" style="max-width: 30%; margin: 1rem auto; display: block;">
+            </div>
+        </div>
+
+        <!-- اسلاید ۲۴: تمرین‌ها -->
+        <div class="slide" data-topic="تمرین‌ها">
+            <div class="slide-content">
+                <h2>تمرین‌های جلسه ۱</h2>
+                <div class="exercise-block ex-yellow">
+                    <div class="ex-header"><span class="ex-num">۱</span> سوالات مفهومی</div>
+                    <p>تفاوت اصلی پژوهش با گزارش را در یک پاراگراف توضیح دهید.</p>
+                </div>
+                <div class="exercise-block ex-green">
+                    <div class="ex-header"><span class="ex-num">۲</span> تمرین عملی</div>
+                    <p>یک مقاله علمی در حوزه مهندسی مکانیک پیدا کنید و بخش‌های IMRAD آن را مشخص کنید.</p>
+                </div>
+                <div class="exercise-block ex-purple">
+                    <div class="ex-header"><span class="ex-num">۳</span> تمرین نوشتاری</div>
+                    <p>مفهوم انتحال را با یک مثال از تاریخ ایران توضیح دهید.</p>
+                </div>
+                <div class="exercise-block ex-red">
+                    <div class="ex-header"><span class="ex-num">۴</span> چالش خلاقانه ★</div>
+                    <p>یک سناریوی فرضی از بی‌اخلاقی پژوهشی طراحی کنید و پیامدهای آن را تحلیل کنید.</p>
+                </div>
+                <div class="email-banner">
+                    <p>ارسال تمرین‌ها به: <strong>A.koochi@gmail.com</strong></p>
+                    <p>فرمت Subject: <strong>[ResearchMethod] HW01 - نام و نام خانوادگی - شماره دانشجویی</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۲۵: جمع‌بندی و خداحافظی -->
+        <div class="slide" data-topic="جمع‌بندی">
+            <div class="slide-content" style="text-align: center;">
+                <h2>جمع‌بندی و پیش‌نمایش جلسه بعد</h2>
+                <p>در این جلسه با مفاهیم پایه پژوهش، اخلاق علمی و تفکیک مفاهیم آشنا شدیم.</p>
+                <p style="color: var(--primary); margin-top: 1rem;">جلسه بعد: انتخاب موضوع و پیشینه پژوهش</p>
+                <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,183,0,0.05); border-radius: 16px; border: 1px solid var(--gold);">
+                    <p style="font-size: 1rem; color: var(--text-dim); margin-bottom: 0.5rem;">معادله یادگیری از داده‌ها — قلب پژوهش علمی</p>
+                    <p style="font-size: 1.2rem; color: var(--gold); font-family: 'Cambria Math', serif; direction: ltr;">\[
+                        \hat{f} = \arg\min_{f \in \mathcal{H}} \left( \frac{1}{N} \sum_{i=1}^{N} L(y_i, f(x_i)) + \lambda \|f\|^2 \right)
+                    \]</p>
+                </div>
+                <p style="font-size: 1.2rem; color: var(--gold); margin-top: 1rem;">با تشکر از توجه شما 🌟</p>
+                <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 1rem;">دکتر علی کوچی و دکتر مسعود گوهری منش</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="dots-nav" id="dots-nav"></div>
+
+    <div class="progress-bar-container">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="nav-bottom">
+        <button class="nav-btn" id="prev-btn"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="slide-counter" id="slide-counter">۱ / ۲۵</div>
+        <button class="nav-btn" id="next-btn"><i class="fa-solid fa-chevron-left"></i></button>
+    </div>
+
+    <div class="podcast-widget">
+        <img src="images/hero-research-intro.png" alt="پادکست">
+        <div>
+            <span class="podcast-label">پادکست جلسه ۱</span>
+            <audio controls>
+                <source src="podcast.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+
+    <div class="modal" id="image-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fa-solid fa-times"></i></button>
+            <img src="" alt="تصویر" id="modal-img">
+            <p class="modal-caption" id="modal-caption"></p>
+        </div>
+    </div>
+
+    <div class="modal" id="concept-modal">
+        <div class="modal-content concept-modal-content">
+            <button class="modal-close" id="concept-close"><i class="fa-solid fa-times"></i></button>
+            <h3 id="concept-title"></h3>
+            <div id="concept-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // ================= مدیریت صدا =================
+        let audioCtx = null;
+        let soundEnabled = true;
+        let musicEnabled = false;
+        let musicOscillators = [];
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playClick() {
+            if (!soundEnabled) return;
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function playTransition() {
+            if (!soundEnabled) return;
+            initAudio();
+            [523.25, 659.25].forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime + i * 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.1 + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + i * 0.1);
+                osc.stop(audioCtx.currentTime + i * 0.1 + 0.2);
+            });
+        }
+
+        function startMusic() {
+            if (!soundEnabled || musicEnabled) return;
+            initAudio();
+            musicEnabled = true;
+            const freqs = [261.63, 329.63, 392.00, 523.25];
+            freqs.forEach(freq => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.value = 0.02;
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                musicOscillators.push({ osc, gain });
+            });
+        }
+
+        function stopMusic() {
+            musicEnabled = false;
+            musicOscillators.forEach(({ osc, gain }) => {
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                osc.stop(audioCtx.currentTime + 0.5);
+            });
+            musicOscillators = [];
+        }
+
+        // ================= ناوبری اسلاید =================
+        const slides = document.querySelectorAll('.slide');
+        const dotsNav = document.getElementById('dots-nav');
+        const slideCounter = document.getElementById('slide-counter');
+        const progressFill = document.getElementById('progress-fill');
+        const topicNav = document.getElementById('topic-nav');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        const topics = [];
+        slides.forEach((slide, index) => {
+            const topic = slide.dataset.topic || `اسلاید ${index + 1}`;
+            topics.push(topic);
+
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsNav.appendChild(dot);
+
+            const pill = document.createElement('button');
+            pill.classList.add('topic-pill');
+            if (index === 0) pill.classList.add('active');
+            pill.textContent = topic;
+            pill.addEventListener('click', () => goToSlide(index));
+            topicNav.appendChild(pill);
+        });
+
+        function updateSlide() {
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === currentSlide);
+            });
+
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === currentSlide);
+            });
+
+            document.querySelectorAll('.topic-pill').forEach((p, i) => {
+                p.classList.toggle('active', i === currentSlide);
+                if (i < currentSlide) p.classList.add('done');
+                else p.classList.remove('done');
+            });
+
+            const activePill = topicNav.children[currentSlide];
+            if (activePill) {
+                activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            slideCounter.textContent = `${toPersianNum(currentSlide + 1)} / ${toPersianNum(totalSlides)}`;
+            progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+            currentSlide = index;
+            updateSlide();
+            playTransition();
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        document.getElementById('next-btn').addEventListener('click', nextSlide);
+        document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); prevSlide(); }
+            if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
+            if (e.key === 'End') { e.preventDefault(); goToSlide(totalSlides - 1); }
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }, { passive: true });
+
+        function toPersianNum(num) {
+            const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+            return num.toString().replace(/\d/g, d => persianDigits[d]);
+        }
+
+        // ================= Lightbox =================
+        const imageModal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalClose = document.getElementById('modal-close');
+
+        document.querySelectorAll('.img-clickable').forEach(img => {
+            img.addEventListener('click', () => {
+                modalImg.src = img.src;
+                modalCaption.textContent = img.dataset.caption || '';
+                imageModal.classList.add('active');
+                playClick();
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            imageModal.classList.remove('active');
+            playClick();
+        });
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) imageModal.classList.remove('active');
+        });
+
+        // ================= مودال مفاهیم =================
+        const conceptModal = document.getElementById('concept-modal');
+        const conceptTitle = document.getElementById('concept-title');
+        const conceptBody = document.getElementById('concept-body');
+        const conceptClose = document.getElementById('concept-close');
+
+        const conceptsData = {
+            entihal: {
+                title: 'انتحال (Entihal)',
+                body: `
+                    <h4>تعریف فنی</h4>
+                    <p>انتحال به معنای نسبت دادن کلام، ایده یا اثر دیگری به خود است. در ادبیات علمی، معادل <b>Plagiarism</b> (سرقت علمی) است.</p>
+                    <h4>ریشه‌شناسی</h4>
+                    <p>واژه «انتحال» از ریشه عربی «نحل» به معنای نسبت دادن گرفته شده است.</p>
+                    <h4>پیوند با تاریخ و فرهنگ</h4>
+                    <p>در تاریخ ایران، کاتبان نسخه‌های خطی گاهی نام خود را به جای مولف اصلی می‌نوشتند. علمای بزرگ مانند خواجه نصیرالدین طوسی بر امانت‌داری تأکید داشتند.</p>
+                    <h4>معنای عمیق‌تر</h4>
+                    <p>انتحال نه تنها یک تخلف علمی، بلکه یک تخلف اخلاقی و فرهنگی است که اعتماد را در جامعه علمی از بین می‌برد.</p>
+                `
+            },
+            retraction: {
+                title: 'ریترکت (Retraction)',
+                body: `
+                    <h4>تعریف فنی</h4>
+                    <p>ریترکت به معنای پس گرفتن رسمی یک مقاله توسط ژورنال به دلیل کشف تخلف علمی، خطاهای جدی یا عدم اعتبار داده‌ها است.</p>
+                    <h4>ریشه‌شناسی</h4>
+                    <p>از ریشه لاتین «retractare» به معنای «پس کشیدن» گرفته شده است.</p>
+                    <h4>پیوند با جامعه علمی</h4>
+                    <p>ریترکت یک مکانیزم خوداصلاحی در علم است. ژورنال‌ها با ریترکت، اعتماد جامعه علمی را حفظ می‌کنند.</p>
+                    <h4>معنای عمیق‌تر</h4>
+                    <p>ریترکت یادآور می‌شود که علم مبتنی بر صداقت است و هرگونه تخلف، پیامدهای جدی دارد.</p>
+                `
+            },
+            blacklist: {
+                title: 'بلک‌لیست (Blacklist)',
+                body: `
+                    <h4>تعریف فنی</h4>
+                    <p>بلک‌لیست به معنای قرار گرفتن نام محقق یا ژورنال در فهرست سیاه است که منجر به محدودیت‌های انتشار و اعتبار می‌شود.</p>
+                    <h4>ریشه‌شناسی</h4>
+                    <p>ترکیبی از «black» (سیاه) و «list» (فهرست) — فهرست افراد یا اشیاء نامطلوب.</p>
+                    <h4>پیوند با جامعه علمی</h4>
+                    <p>سازمان‌هایی مانند Clarivate و Scopus لیست‌های سیاه منتشر می‌کنند. ژورنال‌های <b>Predatory</b> (شکارچی) در این لیست‌ها قرار می‌گیرند.</p>
+                    <h4>معنای عمیق‌تر</h4>
+                    <p>بلک‌لیست هشداری است برای حفظ استانداردهای علمی و جلوگیری از انتشار پژوهش‌های بی‌اعتبار.</p>
+                `
+            }
+        };
+
+        document.querySelectorAll('.concept-word').forEach(word => {
+            word.addEventListener('click', () => {
+                const concept = word.dataset.concept;
+                const data = conceptsData[concept];
+                if (data) {
+                    conceptTitle.textContent = data.title;
+                    conceptBody.innerHTML = data.body;
+                    conceptModal.classList.add('active');
+                    playClick();
+                }
+            });
+        });
+
+        conceptClose.addEventListener('click', () => {
+            conceptModal.classList.remove('active');
+            playClick();
+        });
+        conceptModal.addEventListener('click', (e) => {
+            if (e.target === conceptModal) conceptModal.classList.remove('active');
+        });
+
+        // ================= نقشه ذهنی =================
+        const mindmapPopup = document.getElementById('mindmap-popup');
+        const popupTitle = document.getElementById('popup-title');
+        const popupDesc = document.getElementById('popup-desc');
+
+        const mindmapData = {
+            research: {
+                title: 'پژوهش (Research)',
+                desc: 'فرآیند systematic، objective و reproducible برای کشف دانش جدید. شامل مراحل: تعریف مسئله، جمع‌آوری داده، تحلیل و نتیجه‌گیری.'
+            },
+            report: {
+                title: 'گزارش (Report)',
+                desc: 'سندی که یک رویداد یا فعالیت را توصیف می‌کند. معمولاً بدون تحلیل عمیق و بدون نیاز به بازتولید. مانند گزارش یک آزمایش ساده.'
+            },
+            paper: {
+                title: 'مقاله (Paper)',
+                desc: 'سندی علمی که نتایج یک پژوهش را در قالب IMRAD منتشر می‌کند. هدف: اشتراک‌گذاری دانش جدید با جامعه علمی.'
+            },
+            thesis: {
+                title: 'تز (Thesis)',
+                desc: 'رساله کارشناسی ارشد یا دکتری. سندی جامع که یک پژوهش کامل را از ابتدا تا انتها شامل می‌شود. معمولاً دفاع می‌شود.'
+            },
+            dissertation: {
+                title: 'رساله (Dissertation)',
+                desc: 'معمولاً معادل تز دکتری. پژوهشی عمیق و اصیل که سهم قابل‌توجهی به دانش بشری دارد.'
+            },
+            center: {
+                title: 'مفاهیم پژوهشی',
+                desc: 'روی هر گره کلیک کنید تا تعریف و ویژگی‌های آن را ببینید.'
+            }
+        };
+
+        document.querySelectorAll('.mindmap-node').forEach(node => {
+            node.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const nodeId = node.dataset.node;
+                const data = mindmapData[nodeId];
+                if (data) {
+                    popupTitle.textContent = data.title;
+                    popupDesc.textContent = data.desc;
+                    
+                    const rect = node.getBoundingClientRect();
+                    const container = document.getElementById('mindmap');
+                    const containerRect = container.getBoundingClientRect();
+                    
+                    let left = rect.left - containerRect.left + rect.width / 2 - 125;
+                    let top = rect.top - containerRect.top + rect.height + 10;
+                    
+                    if (left < 10) left = 10;
+                    if (left + 250 > containerRect.width) left = containerRect.width - 260;
+                    if (top + 150 > containerRect.height) top = rect.top - containerRect.top - 160;
+                    
+                    mindmapPopup.style.left = left + 'px';
+                    mindmapPopup.style.top = top + 'px';
+                    mindmapPopup.classList.add('active');
+                    playClick();
+                }
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mindmap-node') && !e.target.closest('.mindmap-popup')) {
+                mindmapPopup.classList.remove('active');
+            }
+        });
+
+        function drawMindmapLines() {
+            const svg = document.getElementById('mindmap-svg');
+            const container = document.getElementById('mindmap');
+            if (!svg || !container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const centerNode = document.querySelector('.node-center');
+            if (!centerNode) return;
+            
+            const centerRect = centerNode.getBoundingClientRect();
+            const cx = centerRect.left - containerRect.left + centerRect.width / 2;
+            const cy = centerRect.top - containerRect.top + centerRect.height / 2;
+            
+            svg.innerHTML = '';
+            
+            document.querySelectorAll('.mindmap-node:not(.node-center)').forEach(node => {
+                const rect = node.getBoundingClientRect();
+                const nx = rect.left - containerRect.left + rect.width / 2;
+                const ny = rect.top - containerRect.top + rect.height / 2;
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', cx);
+                line.setAttribute('y1', cy);
+                line.setAttribute('x2', nx);
+                line.setAttribute('y2', ny);
+                line.setAttribute('stroke', 'rgba(255,255,255,0.15)');
+                line.setAttribute('stroke-width', '2');
+                line.setAttribute('stroke-dasharray', '5,5');
+                svg.appendChild(line);
+            });
+        }
+
+        // ================= شبیه‌سازها =================
+        // شبیه‌ساز ۱: تشخیص مفهوم
+        document.querySelectorAll('.sim-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const feedback = document.getElementById('sim-feedback');
+                if (btn.dataset.answer === 'paper') {
+                    feedback.textContent = '✅ درست! این متن نمونه‌ای از یک مقاله علمی است (بخش Results).';
+                    feedback.style.color = 'var(--success)';
+                } else {
+                    feedback.textContent = '❌ نادرست. این متن شامل نتایج تحلیل و اعداد دقیق است که مشخصه یک مقاله علمی است.';
+                    feedback.style.color = 'var(--danger)';
+                }
+                playClick();
+            });
+        });
+
+        // شبیه‌ساز ۲: IMRAD
+        document.querySelectorAll('.imrad-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const feedback = document.getElementById('imrad-feedback');
+                if (btn.dataset.answer === 'methods') {
+                    feedback.textContent = '✅ درست! این متن مربوط به بخش Methods است (روش‌شناسی و ابزارها).';
+                    feedback.style.color = 'var(--success)';
+                } else {
+                    feedback.textContent = '❌ نادرست. این متن روش انجام کار را توصیف می‌کند که متعلق به بخش Methods است.';
+                    feedback.style.color = 'var(--danger)';
+                }
+                playClick();
+            });
+        });
+
+        // شبیه‌ساز ۳: هدف پژوهش
+        document.querySelectorAll('.objective-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const feedback = document.getElementById('objective-feedback');
+                if (btn.dataset.answer === 'applied') {
+                    feedback.textContent = '✅ درست! ساخت یک حسگر برای تشخیص گاز، یک هدف کاربردی (Applied) است.';
+                    feedback.style.color = 'var(--success)';
+                } else {
+                    feedback.textContent = '❌ نادرست. این پژوهش به دنبال حل یک مشکل عملی (تشخیص گاز) است، بنابراین کاربردی است.';
+                    feedback.style.color = 'var(--danger)';
+                }
+                playClick();
+            });
+        });
+
+        // شبیه‌ساز ۴: مرور پیشینه
+        document.querySelectorAll('.review-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const feedback = document.getElementById('review-feedback');
+                if (btn.dataset.answer === 'yes') {
+                    feedback.textContent = '✅ درست! این متن به مطالعات پیشین اشاره می‌کند و شکاف پژوهشی را نشان می‌دهد.';
+                    feedback.style.color = 'var(--success)';
+                } else {
+                    feedback.textContent = '❌ نادرست. این متن دقیقاً یک مرور پیشینه است که شکاف پژوهشی را مشخص می‌کند.';
+                    feedback.style.color = 'var(--danger)';
+                }
+                playClick();
+            });
+        });
+
+        // شبیه‌ساز ۵: اخلاق
+        document.querySelectorAll('.ethics-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const feedback = document.getElementById('ethics-feedback');
+                if (btn.dataset.answer === 'falsification') {
+                    feedback.textContent = '✅ درست! تغییر داده‌ها برای معنادار شدن نتایج، مصداق Falsification (دستکاری داده) است.';
+                    feedback.style.color = 'var(--success)';
+                } else {
+                    feedback.textContent = '❌ نادرست. این عمل Falsification است، نه Fabrication (جعل از صفر) یا Plagiarism (سرقت).';
+                    feedback.style.color = 'var(--danger)';
+                }
+                playClick();
+            });
+        });
+
+        // ================= تب‌های کد =================
+        document.querySelectorAll('.code-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`code-${tab.dataset.lang}`).classList.add('active');
+                playClick();
+            });
+        });
+
+        // ================= دکمه‌های هدر =================
+        document.getElementById('sound-toggle').addEventListener('click', function() {
+            soundEnabled = !soundEnabled;
+            this.innerHTML = soundEnabled ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-xmark"></i>';
+            if (soundEnabled) playClick();
+        });
+
+        document.getElementById('music-toggle').addEventListener('click', function() {
+            if (musicEnabled) {
+                stopMusic();
+                this.innerHTML = '<i class="fa-solid fa-music"></i>';
+            } else {
+                startMusic();
+                this.innerHTML = '<i class="fa-solid fa-music"></i>';
+            }
+        });
+
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+            playClick();
+        });
+
+        document.getElementById('print-btn').addEventListener('click', () => {
+            window.print();
+        });
+
+        const revealAnswerBtn = document.getElementById('reveal-answer');
+        if (revealAnswerBtn) {
+            revealAnswerBtn.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+        }
+
+        // ================= ذرات نورانی =================
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.color = ['#00d4aa', '#ffb700', '#a855f7'][Math.floor(Math.random() * 3)];
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        window.addEventListener('load', () => {
+            updateSlide();
+            drawMindmapLines();
+            setTimeout(drawMindmapLines, 100);
+        });
+        window.addEventListener('resize', drawMindmapLines);
+        
+        document.body.addEventListener('click', initAudio, { once: true });
+
+    </script>
+</body>
+</html>
