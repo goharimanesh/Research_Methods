@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جلسه ۱: درآمدی بر پژوهش و اخلاق علمی | روش پژوهش</title>
+    <title>جلسه ۱: کالبدشکافی پژوهش مهندسی | روش پژوهش</title>
     
-    <!-- فونت وزیرمتن -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -311,6 +308,8 @@
             border-radius: 12px;
             max-width: 100%;
             border: 1px solid var(--card-border);
+            display: block;
+            margin: 1rem auto;
         }
         .img-clickable:hover {
             transform: scale(1.02);
@@ -351,10 +350,6 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-        }
-        .sim-control-group label {
-            min-width: 120px;
-            font-size: 0.9rem;
         }
         input[type=range] {
             -webkit-appearance: none;
@@ -775,445 +770,192 @@
         <div class="slide active" data-topic="مقدمه">
             <div class="slide-content" style="text-align: center;">
                 <p style="font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem;">بسم الله الرحمن الرحیم</p>
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">روش پژوهش</h2>
-                <p style="font-size: 1.3rem; color: var(--text); margin-bottom: 2rem;">جلسه ۱: درآمدی بر پژوهش، اخلاق علمی و تفکیک مفاهیم</p>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">کالبدشکافی پژوهش مهندسی</h2>
+                <p style="font-size: 1.2rem; color: var(--text); margin-bottom: 2rem;">راهنمای ورود به مرز دانش (از حل مسئله مهندسی تا تولید علم)</p>
                 
                 <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,183,0,0.05); border-radius: 16px; border: 1px solid var(--gold);">
                     <p style="font-size: 1rem; color: var(--text-dim); margin-bottom: 0.5rem;">معادله یادگیری از داده‌ها — قلب پژوهش علمی</p>
                     <p style="font-size: 1.2rem; color: var(--gold); font-family: 'Cambria Math', serif; direction: ltr;">\[
                         \hat{f} = \arg\min_{f \in \mathcal{H}} \left( \frac{1}{N} \sum_{i=1}^{N} L(y_i, f(x_i)) + \lambda \|f\|^2 \right)
                     \]</p>
-                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">کشف الگو از داده‌های تجربی — همان هدف والای پژوهش</p>
                 </div>
 
                 <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap;">
                     <div>
                         <p style="font-size: 1rem; color: var(--primary); font-weight: bold;">دکتر علی کوچی</p>
-                        <p style="font-size: 0.8rem; color: var(--text-dim);">دانشیار گروه مهندسی مکانیک</p>
                     </div>
                     <div>
                         <p style="font-size: 1rem; color: var(--primary); font-weight: bold;">دکتر مسعود گوهری منش</p>
-                        <p style="font-size: 0.8rem; color: var(--text-dim);">دانشیار گروه مهندسی مکانیک</p>
                     </div>
                 </div>
                 <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 1.5rem;">دانشگاه تربت حیدریه — نیمسال اول</p>
             </div>
         </div>
 
-        <!-- اسلاید ۲: اهداف -->
-        <div class="slide" data-topic="اهداف">
+        <!-- اسلاید ۲: دوراهی مهندس (Slide2) -->
+        <div class="slide" data-topic="دوراهی مهندس">
             <div class="slide-content">
-                <h2>اهداف یادگیری جلسه</h2>
-                <ul>
-                    <li>آشنایی با مفهوم <b>Research</b> و تفاوت آن با کار روزمره</li>
-                    <li>تفکیک دقیق «پژوهش»، «گزارش»، «مقاله»، «تز» و «رساله»</li>
-                    <li>درک <b>هدف پژوهش</b> (بنیادی، کاربردی، توسعه‌ای)</li>
-                    <li>اهمیت <b>مرور پیشینه</b> — چرا نباید چرخ را دوباره اختراع کنیم</li>
-                    <li>درک عمیق اخلاق پژوهش با نگاهی به تاریخ ایران (مفهوم <span class="concept-word" data-concept="entihal">انتحال</span>)</li>
-                    <li>شناخت مصادیق بی‌اخلاقی پژوهشی و عواقب آن (<span class="concept-word" data-concept="retraction">Retraction</span> و <span class="concept-word" data-concept="blacklist">Blacklist</span>)</li>
-                    <li>آشنایی با ساختار استاندارد مقاله علمی (<b>IMRAD</b>)</li>
+                <h2>دوراهی مهندس: وقتی کاتالوگ‌ها پاسخگو نیستند</h2>
+                <img src="images/Slide2.JPG" alt="دوراهی مهندس" class="img-clickable" data-caption="دوراهی مهندس: حل مسئله مهندسی یا نیاز به پژوهش علمی">
+                <p style="margin-top: 1rem;">مهندس با دو موقعیت روبرو می‌شود: حل مسئله با استفاده از روش‌های شناخته‌شده (کاتالوگ‌ها)، یا مواجهه با موقعیتی که پاسخ آن در منابع موجود نیست. در اینجاست که <b>پژوهش علمی</b> متولد می‌شود.</p>
+                <p style="color: var(--gold);">پرسش کلیدی: اگر کاتالوگ و روش‌های موجود جواب ندهند، چه می‌کنیم؟ (پاسخ: عبور از مرز دانش)</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۳: سه‌گانه کار دانشی (Slide3) -->
+        <div class="slide" data-topic="سه‌گانه دانشی">
+            <div class="slide-content">
+                <h2>سه‌گانه کار دانشی: جایگاه پژوهش کجاست؟</h2>
+                <img src="images/Slide3.JPG" alt="سه‌گانه کار دانشی" class="img-clickable" data-caption="سه‌گانه: گردآوری اطلاعات، حل مسئله مهندسی، پژوهش علمی">
+                <div class="cards-grid" style="margin-top: 1rem;">
+                    <div class="card">
+                        <h3>گردآوری اطلاعات</h3>
+                        <p>تجمع آنچه هست. مثال: بررسی ۲۰ مقاله درباره نانوسیال.</p>
+                    </div>
+                    <div class="card">
+                        <h3>حل مسئله مهندسی</h3>
+                        <p>استفاده از روش‌های شناخته‌شده. مثال: طراحی مبدل با نانوسیال.</p>
+                    </div>
+                    <div class="card" style="border-color: var(--gold);">
+                        <h3>پژوهش علمی</h3>
+                        <p>کاوش نظام‌مند برای نداشته‌ها. مثال: بررسی تجربی اثر کسر حجمی نانوذره بر ضریب انتقال حرارت.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۴: روش در برابر روش‌شناسی (Slide4) -->
+        <div class="slide" data-topic="روش و روش‌شناسی">
+            <div class="slide-content">
+                <h2>معماری موتور پژوهش: روش در برابر روش‌شناسی</h2>
+                <img src="images/Slide4.JPG" alt="روش در برابر روش‌شناسی" class="img-clickable" data-caption="تفاوت روش (Methods) و روش‌شناسی (Methodology)">
+                <div class="cards-grid" style="margin-top: 1rem;">
+                    <div class="card" style="border-color: var(--primary);">
+                        <h3>روش (Methods)</h3>
+                        <p>گام‌ها و ابزارهای مشخص برای گردآوری و تحلیل داده‌ها. پاسخ به «چگونه اجرا». </p>
+                    </div>
+                    <div class="card" style="border-color: var(--gold);">
+                        <h3>روش‌شناسی (Methodology)</h3>
+                        <p>منطق و توجیه کل رویکرد. پاسخ به «چرا این روش برای این مسئله انتخاب شد».</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۵: چرخه منطقی پژوهش (Slide5) -->
+        <div class="slide" data-topic="چرخه منطقی">
+            <div class="slide-content">
+                <h2>زنجیره منطقی پژوهش</h2>
+                <img src="images/Slide5.JPG" alt="چرخه منطقی" class="img-clickable" data-caption="زنجیره: مسئله ← هدف ← روش ← شواهد ← نتیجه">
+                <p style="text-align: center; margin-top: 1rem; color: var(--gold);">هر حلقه از این زنجیره باید به حلقه قبلی متصل باشد.</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۶: خطاهای ساختاری (Slide7) -->
+        <div class="slide" data-topic="خطاهای ساختاری">
+            <div class="slide-content">
+                <h2>خطاهای ساختاری: وقتی سیستم از کار می‌افتد</h2>
+                <img src="images/Slide7.JPG" alt="خطاهای ساختاری" class="img-clickable" data-caption="خطاهای ساختاری در پژوهش">
+                <div class="cards-grid" style="margin-top: 1rem;">
+                    <div class="card" style="border-color: var(--danger);"><h3>گسست هدف-مسئله</h3><p>هدف مبهم است یا مستقیماً به حل مسئله کمک نمی‌کند.</p></div>
+                    <div class="card" style="border-color: var(--danger);"><h3>ناسازگاری روش</h3><p>روش انتخاب‌شده قابلیت و ابزار لازم برای رسیدن به هدف را ندارد.</p></div>
+                    <div class="card" style="border-color: var(--danger);"><h3>تجاوز از شواهد</h3><p>نتیجه‌گیری فراتر از داده‌ها است و محدودیت‌ها گزارش نمی‌شوند.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اسلاید ۷: ژنوم مسئله خوب (Slide8) -->
+        <div class="slide" data-topic="مسئله خوب">
+            <div class="slide-content">
+                <h2>ژنوم یک مسئله خوب: ۴ ویژگی حیاتی</h2>
+                <img src="images/Slide8.JPG" alt="ژنوم مسئله خوب" class="img-clickable" data-caption="ویژگی‌های یک مسئله خوب">
+                <ul style="margin-top: 1rem;">
+                    <li><b>وضوح:</b> دقیق و بدون ابهام بیان شده باشد.</li>
+                    <li><b>اهمیت:</b> یک شکاف واقعی یا نیاز در مرز دانش مهندسی را هدف قرار دهد.</li>
+                    <li><b>امکان‌پذیری:</b> با توجه به زمان، ابزار، مهارت و منابع موجود قابل انجام باشد.</li>
+                    <li><b>قابلیت بررسی:</b> متغیرها قابلیت اندازه‌گیری و سنجش داشته باشند.</li>
                 </ul>
-                <img src="images/hero-research-intro.png" alt="مقدمه پژوهش" class="img-clickable" data-caption="مقدمه‌ای بر پژوهش" style="max-width: 60%; margin: 1.5rem auto; display: block;">
             </div>
         </div>
 
-        <!-- اسلاید ۳: انگیزه -->
-        <div class="slide" data-topic="انگیزه">
+        <!-- اسلاید ۸: مهندسی موضوع (Slide9) -->
+        <div class="slide" data-topic="مهندسی موضوع">
             <div class="slide-content">
-                <h2>پژوهش چیست و چرا مهم است؟</h2>
-                <p>پژوهش یک فرآیند <b>systematic</b>، <b>objective</b> و <b>reproducible</b> برای کشف حقیقت است.</p>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3><i class="fa-solid fa-newspaper"></i> روزنامه‌نگاری</h3>
-                        <p>گزارش یک رویداد بدون تحلیل عمیق و بدون نیاز به بازتولید.</p>
-                    </div>
-                    <div class="card">
-                        <h3><i class="fa-solid fa-flask"></i> پژوهش</h3>
-                        <p>کشف روابط علت و معلولی، با روش‌مندی دقیق و قابلیت بازتولید.</p>
-                    </div>
-                    <div class="card">
-                        <h3><i class="fa-solid fa-chart-line"></i> اهمیت</h3>
-                        <p>پژوهش موتور پیشرفت علم، فناوری و حل مسائل جامعه است.</p>
-                    </div>
+                <h2>مهندسی موضوع: از حوزه کلی تا مسئله قابل سنجش</h2>
+                <img src="images/Slide9.JPG" alt="مهندسی موضوع" class="img-clickable" data-caption="قیف مهندسی موضوع">
+                <div class="cards-grid" style="margin-top: 1rem;">
+                    <div class="card"><h3>۱. حوزه کلی</h3><p>مثال: انتقال حرارت. بسیار وسیع، غیرقابل پژوهش مستقیم.</p></div>
+                    <div class="card"><h3>۲. موضوع محدودشده</h3><p>مثال: بهبود انرژی در مبدل‌های حرارتی. جهت‌دار اما فاقد متغیر دقیق.</p></div>
+                    <div class="card" style="border-color: var(--gold);"><h3>۳. مسئله قابل بررسی</h3><p>مثال: اثر افزودن پره‌های مارپیچی با گام‌های مختلف بر ضریب انتقال حرارت و افت فشار مبدل دو لوله‌ای در بازه رینولدز مشخص.</p></div>
                 </div>
-                <p style="margin-top: 1rem; color: var(--text-dim); font-size: 0.95rem;">تفاوت اصلی: پژوهش به دنبال «چرا» و «چگونه» است، نه فقط «چه».</p>
             </div>
         </div>
 
-        <!-- اسلاید ۴: تعریف پژوهش -->
-        <div class="slide" data-topic="تعریف">
+        <!-- اسلاید ۹: گاردریل‌های اخلاق (Slide10) -->
+        <div class="slide" data-topic="گاردریل اخلاق">
             <div class="slide-content">
-                <h2>تعریف پژوهش (Research)</h2>
-                <p>پژوهش یک تلاش <b>systematic</b> و <b>objective</b> برای یافتن پاسخ به یک سوال مشخص است که منجر به دانش جدید می‌شود.</p>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3><b>Systematic</b></h3>
-                        <p>فرآیند منظم و مرحله‌به‌مرحله با روش‌شناسی مشخص.</p>
-                    </div>
-                    <div class="card">
-                        <h3><b>Objective</b></h3>
-                        <p>بدون سوگیری شخصی، مبتنی بر شواهد و داده‌ها.</p>
-                    </div>
-                    <div class="card">
-                        <h3><b>Reproducible</b></h3>
-                        <p>نتایج باید توسط دیگران قابل بازتولید باشد.</p>
-                    </div>
+                <h2>گاردریل‌های پژوهش: ترازوی اخلاق و اعتماد</h2>
+                <img src="images/Slide10.JPG" alt="گاردریل‌های اخلاق" class="img-clickable" data-caption="ترازوی اخلاق و اعتماد">
+                <p style="margin-top: 1rem;">پژوهش بر پایه اعتماد استوار است. بدون صداقت، زنجیره دانش از هم می‌پاشد.</p>
+                <p style="color: var(--gold);">اخلاق علمی به معنای شفافیت کامل در گزارش فرایند، داده‌ها، محدودیت‌ها و منابع است.</p>
+            </div>
+        </div>
+
+        <!-- اسلاید ۱۰: چهار تخلف ویرانگر (Slide11) -->
+        <div class="slide" data-topic="چهار تخلف">
+            <div class="slide-content">
+                <h2>چهار تخلف ویرانگر در سیستم علمی</h2>
+                <img src="images/Slide11.JPG" alt="چهار تخلف" class="img-clickable" data-caption="چهار تخلف ویرانگر">
+                <div class="cards-grid" style="margin-top: 1rem;">
+                    <div class="card"><h3>سرقت علمی</h3><p>ارائه ایده، متن، شکل یا جدول دیگران به نام خود.</p></div>
+                    <div class="card"><h3>جعل داده</h3><p>ساختن داده‌ها یا نتایجی که هرگز در واقعیت به دست نیامده‌اند.</p></div>
+                    <div class="card"><h3>دست‌کاری نتایج</h3><p>حذف یا تغییر گزینشی داده‌ها برای رسیدن به نتیجه دلخواه.</p></div>
+                    <div class="card"><h3>ارجاع نادرست</h3><p>استناد به منبعی که بررسی نشده یا ادعایی به آن نسبت داده شده که در آن نیست.</p></div>
                 </div>
-                <img src="images/research-definition.png" alt="تعریف پژوهش" class="img-clickable" data-caption="تعریف پژوهش" style="max-width: 50%; margin: 1rem auto; display: block;">
             </div>
         </div>
 
-        <!-- اسلاید ۵: هدف پژوهش (جدید) -->
-        <div class="slide" data-topic="هدف پژوهش">
+        <!-- اسلاید ۱۱: مرز ظریف خطای علمی (Slide12) -->
+        <div class="slide" data-topic="مرز خطا">
             <div class="slide-content">
-                <h2>هدف پژوهش (Research Objective)</h2>
-                <p>هر پژوهش باید یک <b>هدف مشخص</b> داشته باشد. هدف پژوهش تعیین می‌کند که ما به دنبال چه چیزی هستیم و چرا.</p>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>پژوهش بنیادی (Basic)</h3>
-                        <p>هدف: کشف قوانین بنیادی طبیعت. بدون کاربرد فوری. مثال: مطالعه خواص گرافن.</p>
-                    </div>
-                    <div class="card">
-                        <h3>پژوهش کاربردی (Applied)</h3>
-                        <p>هدف: حل یک مشکل عملی. مثال: ساخت حسگر گرافنی برای تشخیص گاز.</p>
-                    </div>
-                    <div class="card">
-                        <h3>پژوهش توسعه‌ای (Developmental)</h3>
-                        <p>هدف: بهبود یک محصول یا فرآیند موجود. مثال: افزایش حساسیت حسگر گرافنی.</p>
-                    </div>
+                <h2>کالبدشکافی تخلفات: مرز ظریف خطای علمی</h2>
+                <img src="images/Slide12.JPG" alt="مرز خطای علمی" class="img-clickable" data-caption="مرز ظریف بین خطا و تخلف">
+                <div class="cards-grid" style="margin-top: 1rem;">
+                    <div class="card" style="border-color: var(--gold);"><h3>معمای داده‌های نامطلوب</h3><p>حذف داده‌های پرت اگر با معیار از پیش تعیین‌شده و شفاف باشد علمی است؛ پنهان‌کاری آن تخلف است.</p></div>
+                    <div class="card" style="border-color: var(--gold);"><h3>زنجیره ارجاع کور</h3><p>نقل یک رابطه از مقاله ثانویه بدون خواندن مقاله اصلی. راه حل: مراجعه مستقیم به منبع اصلی.</p></div>
                 </div>
-                <p style="margin-top: 1rem; color: var(--gold); font-size: 0.95rem;">هدف پژوهش باید <b>SMART</b> باشد: Specific, Measurable, Achievable, Relevant, Time-bound.</p>
             </div>
         </div>
 
-        <!-- اسلاید ۶: اهمیت مرور پیشینه (جدید) -->
-        <div class="slide" data-topic="مرور پیشینه">
+        <!-- اسلاید ۱۲: چارچوب گزارش شفاف (Slide13) -->
+        <div class="slide" data-topic="گزارش شفاف">
             <div class="slide-content">
-                <h2>چرا نباید چرخ را دوباره اختراع کنیم؟</h2>
-                <p>یکی از مهم‌ترین اهداف پژوهش، <b>مرور پیشینه (Literature Review)</b> است. اگر کارهای گذشتگان را بررسی نکنیم، ممکن است:</p>
-                <ul>
-                    <li>پژوهشی را انجام دهیم که قبلاً انجام شده است (<b>Duplication</b>).</li>
-                    <li>منابع و بودجه را هدر دهیم.</li>
-                    <li>فرصت نوآوری واقعی را از دست بدهیم.</li>
+                <h2>مسئولیت پژوهشگر: چارچوب گزارش شفاف</h2>
+                <img src="images/Slide13.JPG" alt="چارچوب گزارش شفاف" class="img-clickable" data-caption="چارچوب گزارش شفاف">
+                <ul style="margin-top: 1rem;">
+                    <li>گزارش شفاف، دقیق و کاملاً قابل تکرار توسط پژوهشگران مستقل.</li>
+                    <li>ارائه کامل داده‌ها؛ هرگونه حذف داده با دلایل فنی و آماری مستند گردد.</li>
+                    <li>مرزهای اعتبار نتیجه با دقت بیان شود. گزارش محدودیت‌ها نشانه صداقت و بلوغ علمی است.</li>
+                    <li>ارجاعات دقیق، واقعی و صرفاً از منابعی که مستقیماً مطالعه و بررسی شده‌اند.</li>
                 </ul>
-                <div style="background: rgba(255,183,0,0.05); padding: 1rem; border-radius: 12px; border: 1px solid var(--gold); margin-top: 1rem;">
-                    <p style="color: var(--gold); font-weight: bold;">مثال کلاسیک: چرخ</p>
-                    <p style="font-size: 0.9rem; color: var(--text-dim);">اگر مخترع چرخ، کارهای گذشتگان (استفاده از غلتک) را بررسی نمی‌کرد، هرگز به ایده چرخ نمی‌رسید. مرور پیشینه، نقطه شروع نوآوری است.</p>
-                </div>
-                <p style="margin-top: 1rem; color: var(--text-dim); font-size: 0.95rem;">مرور پیشینه به ما می‌گوید: «الان کجای مسیر هستیم» و «چه شکاف‌هایی (Gaps) وجود دارد».</p>
             </div>
         </div>
 
-        <!-- اسلاید ۷: نقشه ذهنی تعاملی -->
-        <div class="slide" data-topic="تفکیک مفاهیم">
+        <!-- اسلاید ۱۳: تصویر کالن (Slide14) -->
+        <div class="slide" data-topic="معماری یکپارچه">
             <div class="slide-content">
-                <h2>تفکیک مفاهیم: پژوهش، گزارش، مقاله، تز، رساله</h2>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">روی هر گره کلیک کنید تا تعریف و ویژگی‌های آن را ببینید.</p>
-                
-                <div class="mindmap-container" id="mindmap">
-                    <svg class="mindmap-svg" id="mindmap-svg"></svg>
-                    
-                    <div class="mindmap-node node-center" data-node="center">مفاهیم پژوهشی</div>
-                    
-                    <div class="mindmap-node node-1" data-node="research">پژوهش (Research)</div>
-                    <div class="mindmap-node node-2" data-node="report">گزارش (Report)</div>
-                    <div class="mindmap-node node-3" data-node="paper">مقاله (Paper)</div>
-                    <div class="mindmap-node node-4" data-node="thesis">تز (Thesis)</div>
-                    <div class="mindmap-node node-5" data-node="dissertation">رساله (Dissertation)</div>
-
-                    <div class="mindmap-popup" id="mindmap-popup">
-                        <h4 id="popup-title"></h4>
-                        <p id="popup-desc"></p>
-                    </div>
-                </div>
+                <h2>تصویر کالن: معماری یکپارچه پژوهش مهندسی</h2>
+                <img src="images/Slide14.JPG" alt="معماری یکپارچه" class="img-clickable" data-caption="معماری یکپارچه پژوهش">
+                <p style="margin-top: 1rem; text-align: center; color: var(--gold);">ورودی: مسائل دارای وضوح و قابلیت بررسی — محیط حاکم: گاردریل‌های اخلاق علمی و شفافیت — پردازش: انسجام زنجیره منطقی.</p>
             </div>
         </div>
 
-        <!-- اسلاید ۸: شبیه‌ساز تشخیص مفهوم -->
-        <div class="slide" data-topic="شبیه‌ساز ۱">
-            <div class="slide-content">
-                <h2>شبیه‌ساز ۱: کدام یک چیست؟</h2>
-                <p>متن زیر را بخوانید و تشخیص دهید متعلق به کدام نوع است.</p>
-                <div class="sim-container">
-                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
-                        «در این مطالعه، اثر پارامترهای مختلف بر روی بازدهی توربین بررسی شد. نتایج نشان داد که افزایش دما تا ۵۰۰ درجه سانتی‌گراد باعث بهبود ۱۵ درصدی بازدهی می‌شود.»
-                    </p>
-                    <div class="sim-controls" style="margin-top: 1rem;">
-                        <button class="tab-btn sim-option" data-answer="paper" style="padding: 0.8rem;">مقاله (Paper)</button>
-                        <button class="tab-btn sim-option" data-answer="report" style="padding: 0.8rem;">گزارش (Report)</button>
-                        <button class="tab-btn sim-option" data-answer="thesis" style="padding: 0.8rem;">تز (Thesis)</button>
-                    </div>
-                    <p id="sim-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۹: IMRAD -->
-        <div class="slide" data-topic="IMRAD">
-            <div class="slide-content">
-                <h2>ساختار مقاله علمی: IMRAD</h2>
-                <div class="cards-grid">
-                    <div class="card"><h3>I - Introduction</h3><p>مقدمه، بیان مسئله، اهداف</p></div>
-                    <div class="card"><h3>M - Methods</h3><p>روش‌شناسی، ابزارها، داده‌ها</p></div>
-                    <div class="card"><h3>R - Results</h3><p>نتایج، جداول، نمودارها</p></div>
-                    <div class="card"><h3>A - and Discussion</h3><p>بحث، تفسیر، نتیجه‌گیری</p></div>
-                </div>
-                <img src="images/imrad-structure.png" alt="IMRAD" class="img-clickable" data-caption="ساختار IMRAD" style="max-width: 50%; margin: 1rem auto; display: block;">
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۰: شبیه‌ساز IMRAD -->
-        <div class="slide" data-topic="شبیه‌ساز ۲">
-            <div class="slide-content">
-                <h2>شبیه‌ساز ۲: کدام بخش مقاله؟</h2>
-                <div class="sim-container">
-                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
-                        «داده‌ها با استفاده از نرم‌افزار MATLAB و روش المان محدود تحلیل شدند. مش‌بندی با ۱۰۰۰ المان انجام گرفت.»
-                    </p>
-                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="tab-btn imrad-option" data-answer="intro" style="padding: 0.8rem;">Introduction</button>
-                        <button class="tab-btn imrad-option" data-answer="methods" style="padding: 0.8rem;">Methods</button>
-                        <button class="tab-btn imrad-option" data-answer="results" style="padding: 0.8rem;">Results</button>
-                        <button class="tab-btn imrad-option" data-answer="discussion" style="padding: 0.8rem;">Discussion</button>
-                    </div>
-                    <p id="imrad-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۱: شبیه‌ساز هدف پژوهش (جدید) -->
-        <div class="slide" data-topic="شبیه‌ساز ۳">
-            <div class="slide-content">
-                <h2>شبیه‌ساز ۳: هدف پژوهش چیست؟</h2>
-                <div class="sim-container">
-                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
-                        «هدف این پژوهش، ساخت یک حسگر گرافنی برای تشخیص گاز متان در دمای اتاق است.»
-                    </p>
-                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="tab-btn objective-option" data-answer="basic" style="padding: 0.8rem;">بنیادی (Basic)</button>
-                        <button class="tab-btn objective-option" data-answer="applied" style="padding: 0.8rem;">کاربردی (Applied)</button>
-                        <button class="tab-btn objective-option" data-answer="developmental" style="padding: 0.8rem;">توسعه‌ای (Developmental)</button>
-                    </div>
-                    <p id="objective-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۲: شبیه‌ساز مرور پیشینه (جدید) -->
-        <div class="slide" data-topic="شبیه‌ساز ۴">
-            <div class="slide-content">
-                <h2>شبیه‌ساز ۴: کدام یک «مرور پیشینه» است؟</h2>
-                <div class="sim-container">
-                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
-                        «مطالعات پیشین نشان داده‌اند که حسگرهای گرافنی حساسیت بالایی دارند (Smith et al., 2020). با این حال، هیچ مطالعه‌ای تاکنون اثر دما را بر حساسیت آن‌ها بررسی نکرده است.»
-                    </p>
-                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="tab-btn review-option" data-answer="yes" style="padding: 0.8rem;">بله، این یک مرور پیشینه است</button>
-                        <button class="tab-btn review-option" data-answer="no" style="padding: 0.8rem;">خیر، این یک مرور پیشینه نیست</button>
-                    </div>
-                    <p id="review-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۳: اخلاق و انتحال -->
-        <div class="slide" data-topic="اخلاق و انتحال">
-            <div class="slide-content">
-                <h2>اخلاق پژوهش: نگاهی به تاریخ ایران</h2>
-                <p>مفهوم <span class="concept-word" data-concept="entihal">انتحال</span> در ادب و علم ایرانی ریشه‌ای عمیق دارد. انتحال به معنای نسبت دادن کلام یا اثر دیگری به خود است.</p>
-                <ul>
-                    <li>در نسخه‌های خطی، کاتبان گاهی نام خود را به جای مولف اصلی می‌نوشتند.</li>
-                    <li>علمای بزرگ ایرانی مانند <b>خواجه نصیرالدین طوسی</b> بر امانت‌داری در نقل قول تأکید داشتند.</li>
-                    <li>انتحال نه تنها یک تخلف علمی، بلکه یک تخلف اخلاقی و فرهنگی است.</li>
-                </ul>
-                <img src="images/ethics-ancient-iran.png" alt="اخلاق در ایران باستان" class="img-clickable" data-caption="اخلاق پژوهش در ایران" style="max-width: 40%; margin: 1rem auto; display: block;">
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۴: اصول اخلاق پژوهش -->
-        <div class="slide" data-topic="اصول اخلاق">
-            <div class="slide-content">
-                <h2>اصول اخلاق پژوهش</h2>
-                <div class="cards-grid">
-                    <div class="card"><h3><i class="fa-solid fa-check"></i> صداقت</h3><p>گزارش صادقانه داده‌ها و نتایج</p></div>
-                    <div class="card"><h3><i class="fa-solid fa-handshake"></i> امانت‌داری</h3><p>ارجاع دقیق به منابع دیگران</p></div>
-                    <div class="card"><h3><i class="fa-solid fa-scale-balanced"></i> بی‌طرفی</h3><p>عدم سوگیری در تحلیل و تفسیر</p></div>
-                    <div class="card"><h3><i class="fa-solid fa-users"></i> احترام</h3><p>احترام به حقوق شرکت‌کنندگان</p></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۵: مصادیق بی‌اخلاقی -->
-        <div class="slide" data-topic="مصادیق">
-            <div class="slide-content">
-                <h2>مصادیق بی‌اخلاقی پژوهشی</h2>
-                <ul>
-                    <li><b>Plagiarism</b> (سرقت علمی): کپی کردن متن یا ایده بدون ارجاع.</li>
-                    <li><b>Fabrication</b> (جعل داده): ساختن داده‌های غیرواقعی.</li>
-                    <li><b>Falsification</b> (دستکاری داده): تغییر یا حذف داده‌های واقعی.</li>
-                    <li><b>Self-plagiarism</b> (خودسرقتی): استفاده مجدد از کارهای قبلی خود بدون ارجاع.</li>
-                    <li>سرقت ایده: نسبت دادن ایده دیگران به خود.</li>
-                </ul>
-                <img src="images/plagiarism-types.png" alt="انواع سرقت علمی" class="img-clickable" data-caption="مصادیق بی‌اخلاقی" style="max-width: 50%; margin: 1rem auto; display: block;">
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۶: شبیه‌ساز تشخیص بی‌اخلاقی -->
-        <div class="slide" data-topic="شبیه‌ساز ۵">
-            <div class="slide-content">
-                <h2>شبیه‌ساز ۵: تشخیص بی‌اخلاقی پژوهشی</h2>
-                <div class="sim-container">
-                    <p style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-style: italic;">
-                        «یک researcher داده‌های آزمایشگاهی خود را طوری تغییر داد که نتایج معنادار شوند.»
-                    </p>
-                    <div class="sim-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="tab-btn ethics-option" data-answer="fabrication" style="padding: 0.8rem;">Fabrication</button>
-                        <button class="tab-btn ethics-option" data-answer="falsification" style="padding: 0.8rem;">Falsification</button>
-                        <button class="tab-btn ethics-option" data-answer="plagiarism" style="padding: 0.8rem;">Plagiarism</button>
-                    </div>
-                    <p id="ethics-feedback" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۷: ریترکت -->
-        <div class="slide" data-topic="ریترکت">
-            <div class="slide-content">
-                <h2>عواقب بی‌اخلاقی: ریترکت مقاله (Retraction)</h2>
-                <p><span class="concept-word" data-concept="retraction">Retraction</span> به معنای پس گرفتن رسمی یک مقاله توسط ژورنال به دلیل کشف تخلف علمی است.</p>
-                <div class="cards-grid">
-                    <div class="card"><h3>دلایل</h3><p>جعل داده، سرقت علمی، خطاهای جدی</p></div>
-                    <div class="card"><h3>پیامد</h3><p>از دست رفتن اعتبار، ممنوعیت از انتشار</p></div>
-                    <div class="card"><h3>مثال واقعی</h3><p>ریترکت مقالات متعدد در حوزه مهندسی به دلیل دستکاری داده</p></div>
-                </div>
-                <img src="images/retraction.png" alt="ریترکت" class="img-clickable" data-caption="ریترکت مقاله" style="max-width: 40%; margin: 1rem auto; display: block;">
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۸: بلک‌لیست -->
-        <div class="slide" data-topic="بلک‌لیست">
-            <div class="slide-content">
-                <h2>عواقب بی‌اخلاقی: بلک‌لیست شدن (Blacklisting)</h2>
-                <p><span class="concept-word" data-concept="blacklist">Blacklisting</span> به معنای قرار گرفتن نام محقق یا ژورنال در فهرست سیاه است.</p>
-                <ul>
-                    <li>ژورنال‌های <b>Predatory</b> (شکارچی) در لیست سیاه قرار می‌گیرند.</li>
-                    <li>محققان متخلف ممکن است از دریافت گرانت و انتشار در ژورنال‌های معتبر محروم شوند.</li>
-                    <li>سازمان‌هایی مانند Clarivate و Scopus لیست‌های سیاه منتشر می‌کنند.</li>
-                </ul>
-                <img src="images/blacklist.png" alt="بلک‌لیست" class="img-clickable" data-caption="بلک‌لیست شدن" style="max-width: 40%; margin: 1rem auto; display: block;">
-            </div>
-        </div>
-
-        <!-- اسلاید ۱۹: حل گام‌به‌گام -->
-        <div class="slide" data-topic="حل گام‌به‌گام">
-            <div class="slide-content">
-                <h2>حل گام‌به‌گام: یک مثال واقعی از ریترکت</h2>
-                <p>مقاله‌ای در حوزه مهندسی مکانیک که به دلیل <b>Falsification</b> داده‌ها ریترکت شد.</p>
-                <ul>
-                    <li><b>گام ۱:</b> شناسایی تناقض در داده‌های ارائه‌شده.</li>
-                    <li><b>گام ۲:</b> بررسی توسط تیم داوران و کمیته اخلاق.</li>
-                    <li><b>گام ۳:</b> اعلام ریترکت توسط ژورنال.</li>
-                    <li><b>گام ۴:</b> محرومیت researcher از انتشار در آن ژورنال.</li>
-                </ul>
-                <p style="color: var(--gold); margin-top: 1rem;">درس: اخلاق در پژوهش یک انتخاب نیست، یک ضرورت است.</p>
-            </div>
-        </div>
-
-        <!-- اسلاید ۲۰: تعامل -->
-        <div class="slide" data-topic="تعامل">
-            <div class="slide-content" style="text-align: center;">
-                <h2>سوال کلاسی</h2>
-                <p style="font-size: 1.3rem; margin: 2rem 0;">آیا می‌توان از داده‌های یک مقاله دیگر استفاده کرد؟</p>
-                <p style="color: var(--text-dim);">به پاسخ فکر کنید و سپس اسلاید بعدی را ببینید.</p>
-                <button class="tab-btn" id="reveal-answer" style="margin-top: 1rem; padding: 1rem 2rem; font-size: 1rem;">نمایش پاسخ</button>
-            </div>
-        </div>
-
-        <!-- اسلاید ۲۱: پاسخ تعاملی -->
-        <div class="slide" data-topic="پاسخ">
-            <div class="slide-content">
-                <h2>پاسخ</h2>
-                <p>بله، اما با شرایط:</p>
-                <ul>
-                    <li>ارجاع دقیق به منبع اصلی</li>
-                    <li>عدم استفاده از داده‌های محرمانه بدون اجازه</li>
-                    <li>تحلیل مجدد و تفسیر مستقل</li>
-                </ul>
-                <p style="color: var(--gold); margin-top: 1rem;">استفاده بدون ارجاع = <b>Plagiarism</b></p>
-            </div>
-        </div>
-
-        <!-- اسلاید ۲۲: نقشه راه -->
-        <div class="slide" data-topic="نقشه راه">
-            <div class="slide-content">
-                <h2>نقشه راه پژوهش (نمای کلی دوره)</h2>
-                <img src="images/research-roadmap.png" alt="نقشه راه" class="img-clickable" data-caption="نقشه راه پژوهش" style="max-width: 70%; margin: 1rem auto; display: block;">
-                <p style="text-align: center; color: var(--text-dim);">از انتخاب موضوع تا انتشار مقاله — ۸ جلسه</p>
-            </div>
-        </div>
-
-        <!-- اسلاید ۲۳: کد MATLAB + Python -->
-        <div class="slide" data-topic="کد">
-            <div class="slide-content">
-                <h2>کد MATLAB + Python</h2>
-                <p>نمونه کد ساده برای محاسبه میانگین داده‌های تجربی.</p>
-                <div class="code-tabs">
-                    <button class="code-tab active" data-lang="matlab">MATLAB</button>
-                    <button class="code-tab" data-lang="python">Python</button>
-                </div>
-                <div class="code-content active" id="code-matlab">
-<span class="comment">% محاسبه میانگین داده‌های تجربی</span>
-data = [12.5, 13.1, 12.8, 13.5, 12.9];
-mean_val = mean(data);
-std_val = std(data);
-fprintf(<span class="string">'Mean: %.2f\n'</span>, mean_val);
-fprintf(<span class="string">'STD: %.2f\n'</span>, std_val);
-                </div>
-                <div class="code-content" id="code-python">
-<span class="comment"># محاسبه میانگین داده‌های تجربی</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-data = [12.5, 13.1, 12.8, 13.5, 12.9]
-mean_val = np.mean(data)
-std_val = np.std(data)
-print(<span class="string">f"Mean: {mean_val:.2f}"</span>)
-print(<span class="string">f"STD: {std_val:.2f}"</span>)
-                </div>
-                <img src="images/matlab-python-code.png" alt="کد" class="img-clickable" data-caption="MATLAB و Python" style="max-width: 30%; margin: 1rem auto; display: block;">
-            </div>
-        </div>
-
-        <!-- اسلاید ۲۴: تمرین‌ها -->
-        <div class="slide" data-topic="تمرین‌ها">
-            <div class="slide-content">
-                <h2>تمرین‌های جلسه ۱</h2>
-                <div class="exercise-block ex-yellow">
-                    <div class="ex-header"><span class="ex-num">۱</span> سوالات مفهومی</div>
-                    <p>تفاوت اصلی پژوهش با گزارش را در یک پاراگراف توضیح دهید.</p>
-                </div>
-                <div class="exercise-block ex-green">
-                    <div class="ex-header"><span class="ex-num">۲</span> تمرین عملی</div>
-                    <p>یک مقاله علمی در حوزه مهندسی مکانیک پیدا کنید و بخش‌های IMRAD آن را مشخص کنید.</p>
-                </div>
-                <div class="exercise-block ex-purple">
-                    <div class="ex-header"><span class="ex-num">۳</span> تمرین نوشتاری</div>
-                    <p>مفهوم انتحال را با یک مثال از تاریخ ایران توضیح دهید.</p>
-                </div>
-                <div class="exercise-block ex-red">
-                    <div class="ex-header"><span class="ex-num">۴</span> چالش خلاقانه ★</div>
-                    <p>یک سناریوی فرضی از بی‌اخلاقی پژوهشی طراحی کنید و پیامدهای آن را تحلیل کنید.</p>
-                </div>
-                <div class="email-banner">
-                    <p>ارسال تمرین‌ها به: <strong>A.koochi@gmail.com</strong></p>
-                    <p>فرمت Subject: <strong>[ResearchMethod] HW01 - نام و نام خانوادگی - شماره دانشجویی</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- اسلاید ۲۵: جمع‌بندی و خداحافظی -->
+        <!-- اسلاید ۱۴: جمع‌بندی و نقشه راه (Slide15) -->
         <div class="slide" data-topic="جمع‌بندی">
             <div class="slide-content" style="text-align: center;">
                 <h2>جمع‌بندی و پیش‌نمایش جلسه بعد</h2>
-                <p>در این جلسه با مفاهیم پایه پژوهش، اخلاق علمی و تفکیک مفاهیم آشنا شدیم.</p>
+                <img src="images/Slide15.JPG" alt="جمع‌بندی" class="img-clickable" data-caption="جمع‌بندی" style="max-width: 80%;">
+                <p style="margin-top: 1rem;">در این جلسه با کالبدشکافی پژوهش مهندسی، تفاوت روش و روش‌شناسی، ویژگی‌های مسئله خوب و گاردریل‌های اخلاقی آشنا شدیم.</p>
                 <p style="color: var(--primary); margin-top: 1rem;">جلسه بعد: انتخاب موضوع و پیشینه پژوهش</p>
                 <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,183,0,0.05); border-radius: 16px; border: 1px solid var(--gold);">
                     <p style="font-size: 1rem; color: var(--text-dim); margin-bottom: 0.5rem;">معادله یادگیری از داده‌ها — قلب پژوهش علمی</p>
@@ -1236,12 +978,12 @@ print(<span class="string">f"STD: {std_val:.2f}"</span>)
 
     <div class="nav-bottom">
         <button class="nav-btn" id="prev-btn"><i class="fa-solid fa-chevron-right"></i></button>
-        <div class="slide-counter" id="slide-counter">۱ / ۲۵</div>
+        <div class="slide-counter" id="slide-counter">۱ / ۱۴</div>
         <button class="nav-btn" id="next-btn"><i class="fa-solid fa-chevron-left"></i></button>
     </div>
 
     <div class="podcast-widget">
-        <img src="images/hero-research-intro.png" alt="پادکست">
+        <img src="images/podcast-cover.png" alt="پادکست">
         <div>
             <span class="podcast-label">پادکست جلسه ۱</span>
             <audio controls>
@@ -1456,260 +1198,6 @@ print(<span class="string">f"STD: {std_val:.2f}"</span>)
             if (e.target === imageModal) imageModal.classList.remove('active');
         });
 
-        // ================= مودال مفاهیم =================
-        const conceptModal = document.getElementById('concept-modal');
-        const conceptTitle = document.getElementById('concept-title');
-        const conceptBody = document.getElementById('concept-body');
-        const conceptClose = document.getElementById('concept-close');
-
-        const conceptsData = {
-            entihal: {
-                title: 'انتحال (Entihal)',
-                body: `
-                    <h4>تعریف فنی</h4>
-                    <p>انتحال به معنای نسبت دادن کلام، ایده یا اثر دیگری به خود است. در ادبیات علمی، معادل <b>Plagiarism</b> (سرقت علمی) است.</p>
-                    <h4>ریشه‌شناسی</h4>
-                    <p>واژه «انتحال» از ریشه عربی «نحل» به معنای نسبت دادن گرفته شده است.</p>
-                    <h4>پیوند با تاریخ و فرهنگ</h4>
-                    <p>در تاریخ ایران، کاتبان نسخه‌های خطی گاهی نام خود را به جای مولف اصلی می‌نوشتند. علمای بزرگ مانند خواجه نصیرالدین طوسی بر امانت‌داری تأکید داشتند.</p>
-                    <h4>معنای عمیق‌تر</h4>
-                    <p>انتحال نه تنها یک تخلف علمی، بلکه یک تخلف اخلاقی و فرهنگی است که اعتماد را در جامعه علمی از بین می‌برد.</p>
-                `
-            },
-            retraction: {
-                title: 'ریترکت (Retraction)',
-                body: `
-                    <h4>تعریف فنی</h4>
-                    <p>ریترکت به معنای پس گرفتن رسمی یک مقاله توسط ژورنال به دلیل کشف تخلف علمی، خطاهای جدی یا عدم اعتبار داده‌ها است.</p>
-                    <h4>ریشه‌شناسی</h4>
-                    <p>از ریشه لاتین «retractare» به معنای «پس کشیدن» گرفته شده است.</p>
-                    <h4>پیوند با جامعه علمی</h4>
-                    <p>ریترکت یک مکانیزم خوداصلاحی در علم است. ژورنال‌ها با ریترکت، اعتماد جامعه علمی را حفظ می‌کنند.</p>
-                    <h4>معنای عمیق‌تر</h4>
-                    <p>ریترکت یادآور می‌شود که علم مبتنی بر صداقت است و هرگونه تخلف، پیامدهای جدی دارد.</p>
-                `
-            },
-            blacklist: {
-                title: 'بلک‌لیست (Blacklist)',
-                body: `
-                    <h4>تعریف فنی</h4>
-                    <p>بلک‌لیست به معنای قرار گرفتن نام محقق یا ژورنال در فهرست سیاه است که منجر به محدودیت‌های انتشار و اعتبار می‌شود.</p>
-                    <h4>ریشه‌شناسی</h4>
-                    <p>ترکیبی از «black» (سیاه) و «list» (فهرست) — فهرست افراد یا اشیاء نامطلوب.</p>
-                    <h4>پیوند با جامعه علمی</h4>
-                    <p>سازمان‌هایی مانند Clarivate و Scopus لیست‌های سیاه منتشر می‌کنند. ژورنال‌های <b>Predatory</b> (شکارچی) در این لیست‌ها قرار می‌گیرند.</p>
-                    <h4>معنای عمیق‌تر</h4>
-                    <p>بلک‌لیست هشداری است برای حفظ استانداردهای علمی و جلوگیری از انتشار پژوهش‌های بی‌اعتبار.</p>
-                `
-            }
-        };
-
-        document.querySelectorAll('.concept-word').forEach(word => {
-            word.addEventListener('click', () => {
-                const concept = word.dataset.concept;
-                const data = conceptsData[concept];
-                if (data) {
-                    conceptTitle.textContent = data.title;
-                    conceptBody.innerHTML = data.body;
-                    conceptModal.classList.add('active');
-                    playClick();
-                }
-            });
-        });
-
-        conceptClose.addEventListener('click', () => {
-            conceptModal.classList.remove('active');
-            playClick();
-        });
-        conceptModal.addEventListener('click', (e) => {
-            if (e.target === conceptModal) conceptModal.classList.remove('active');
-        });
-
-        // ================= نقشه ذهنی =================
-        const mindmapPopup = document.getElementById('mindmap-popup');
-        const popupTitle = document.getElementById('popup-title');
-        const popupDesc = document.getElementById('popup-desc');
-
-        const mindmapData = {
-            research: {
-                title: 'پژوهش (Research)',
-                desc: 'فرآیند systematic، objective و reproducible برای کشف دانش جدید. شامل مراحل: تعریف مسئله، جمع‌آوری داده، تحلیل و نتیجه‌گیری.'
-            },
-            report: {
-                title: 'گزارش (Report)',
-                desc: 'سندی که یک رویداد یا فعالیت را توصیف می‌کند. معمولاً بدون تحلیل عمیق و بدون نیاز به بازتولید. مانند گزارش یک آزمایش ساده.'
-            },
-            paper: {
-                title: 'مقاله (Paper)',
-                desc: 'سندی علمی که نتایج یک پژوهش را در قالب IMRAD منتشر می‌کند. هدف: اشتراک‌گذاری دانش جدید با جامعه علمی.'
-            },
-            thesis: {
-                title: 'تز (Thesis)',
-                desc: 'رساله کارشناسی ارشد یا دکتری. سندی جامع که یک پژوهش کامل را از ابتدا تا انتها شامل می‌شود. معمولاً دفاع می‌شود.'
-            },
-            dissertation: {
-                title: 'رساله (Dissertation)',
-                desc: 'معمولاً معادل تز دکتری. پژوهشی عمیق و اصیل که سهم قابل‌توجهی به دانش بشری دارد.'
-            },
-            center: {
-                title: 'مفاهیم پژوهشی',
-                desc: 'روی هر گره کلیک کنید تا تعریف و ویژگی‌های آن را ببینید.'
-            }
-        };
-
-        document.querySelectorAll('.mindmap-node').forEach(node => {
-            node.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const nodeId = node.dataset.node;
-                const data = mindmapData[nodeId];
-                if (data) {
-                    popupTitle.textContent = data.title;
-                    popupDesc.textContent = data.desc;
-                    
-                    const rect = node.getBoundingClientRect();
-                    const container = document.getElementById('mindmap');
-                    const containerRect = container.getBoundingClientRect();
-                    
-                    let left = rect.left - containerRect.left + rect.width / 2 - 125;
-                    let top = rect.top - containerRect.top + rect.height + 10;
-                    
-                    if (left < 10) left = 10;
-                    if (left + 250 > containerRect.width) left = containerRect.width - 260;
-                    if (top + 150 > containerRect.height) top = rect.top - containerRect.top - 160;
-                    
-                    mindmapPopup.style.left = left + 'px';
-                    mindmapPopup.style.top = top + 'px';
-                    mindmapPopup.classList.add('active');
-                    playClick();
-                }
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.mindmap-node') && !e.target.closest('.mindmap-popup')) {
-                mindmapPopup.classList.remove('active');
-            }
-        });
-
-        function drawMindmapLines() {
-            const svg = document.getElementById('mindmap-svg');
-            const container = document.getElementById('mindmap');
-            if (!svg || !container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const centerNode = document.querySelector('.node-center');
-            if (!centerNode) return;
-            
-            const centerRect = centerNode.getBoundingClientRect();
-            const cx = centerRect.left - containerRect.left + centerRect.width / 2;
-            const cy = centerRect.top - containerRect.top + centerRect.height / 2;
-            
-            svg.innerHTML = '';
-            
-            document.querySelectorAll('.mindmap-node:not(.node-center)').forEach(node => {
-                const rect = node.getBoundingClientRect();
-                const nx = rect.left - containerRect.left + rect.width / 2;
-                const ny = rect.top - containerRect.top + rect.height / 2;
-                
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', cx);
-                line.setAttribute('y1', cy);
-                line.setAttribute('x2', nx);
-                line.setAttribute('y2', ny);
-                line.setAttribute('stroke', 'rgba(255,255,255,0.15)');
-                line.setAttribute('stroke-width', '2');
-                line.setAttribute('stroke-dasharray', '5,5');
-                svg.appendChild(line);
-            });
-        }
-
-        // ================= شبیه‌سازها =================
-        // شبیه‌ساز ۱: تشخیص مفهوم
-        document.querySelectorAll('.sim-option').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const feedback = document.getElementById('sim-feedback');
-                if (btn.dataset.answer === 'paper') {
-                    feedback.textContent = '✅ درست! این متن نمونه‌ای از یک مقاله علمی است (بخش Results).';
-                    feedback.style.color = 'var(--success)';
-                } else {
-                    feedback.textContent = '❌ نادرست. این متن شامل نتایج تحلیل و اعداد دقیق است که مشخصه یک مقاله علمی است.';
-                    feedback.style.color = 'var(--danger)';
-                }
-                playClick();
-            });
-        });
-
-        // شبیه‌ساز ۲: IMRAD
-        document.querySelectorAll('.imrad-option').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const feedback = document.getElementById('imrad-feedback');
-                if (btn.dataset.answer === 'methods') {
-                    feedback.textContent = '✅ درست! این متن مربوط به بخش Methods است (روش‌شناسی و ابزارها).';
-                    feedback.style.color = 'var(--success)';
-                } else {
-                    feedback.textContent = '❌ نادرست. این متن روش انجام کار را توصیف می‌کند که متعلق به بخش Methods است.';
-                    feedback.style.color = 'var(--danger)';
-                }
-                playClick();
-            });
-        });
-
-        // شبیه‌ساز ۳: هدف پژوهش
-        document.querySelectorAll('.objective-option').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const feedback = document.getElementById('objective-feedback');
-                if (btn.dataset.answer === 'applied') {
-                    feedback.textContent = '✅ درست! ساخت یک حسگر برای تشخیص گاز، یک هدف کاربردی (Applied) است.';
-                    feedback.style.color = 'var(--success)';
-                } else {
-                    feedback.textContent = '❌ نادرست. این پژوهش به دنبال حل یک مشکل عملی (تشخیص گاز) است، بنابراین کاربردی است.';
-                    feedback.style.color = 'var(--danger)';
-                }
-                playClick();
-            });
-        });
-
-        // شبیه‌ساز ۴: مرور پیشینه
-        document.querySelectorAll('.review-option').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const feedback = document.getElementById('review-feedback');
-                if (btn.dataset.answer === 'yes') {
-                    feedback.textContent = '✅ درست! این متن به مطالعات پیشین اشاره می‌کند و شکاف پژوهشی را نشان می‌دهد.';
-                    feedback.style.color = 'var(--success)';
-                } else {
-                    feedback.textContent = '❌ نادرست. این متن دقیقاً یک مرور پیشینه است که شکاف پژوهشی را مشخص می‌کند.';
-                    feedback.style.color = 'var(--danger)';
-                }
-                playClick();
-            });
-        });
-
-        // شبیه‌ساز ۵: اخلاق
-        document.querySelectorAll('.ethics-option').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const feedback = document.getElementById('ethics-feedback');
-                if (btn.dataset.answer === 'falsification') {
-                    feedback.textContent = '✅ درست! تغییر داده‌ها برای معنادار شدن نتایج، مصداق Falsification (دستکاری داده) است.';
-                    feedback.style.color = 'var(--success)';
-                } else {
-                    feedback.textContent = '❌ نادرست. این عمل Falsification است، نه Fabrication (جعل از صفر) یا Plagiarism (سرقت).';
-                    feedback.style.color = 'var(--danger)';
-                }
-                playClick();
-            });
-        });
-
-        // ================= تب‌های کد =================
-        document.querySelectorAll('.code-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(`code-${tab.dataset.lang}`).classList.add('active');
-                playClick();
-            });
-        });
-
         // ================= دکمه‌های هدر =================
         document.getElementById('sound-toggle').addEventListener('click', function() {
             soundEnabled = !soundEnabled;
@@ -1739,13 +1227,6 @@ print(<span class="string">f"STD: {std_val:.2f}"</span>)
         document.getElementById('print-btn').addEventListener('click', () => {
             window.print();
         });
-
-        const revealAnswerBtn = document.getElementById('reveal-answer');
-        if (revealAnswerBtn) {
-            revealAnswerBtn.addEventListener('click', () => {
-                goToSlide(currentSlide + 1);
-            });
-        }
 
         // ================= ذرات نورانی =================
         const canvas = document.getElementById('particle-canvas');
@@ -1795,10 +1276,7 @@ print(<span class="string">f"STD: {std_val:.2f}"</span>)
 
         window.addEventListener('load', () => {
             updateSlide();
-            drawMindmapLines();
-            setTimeout(drawMindmapLines, 100);
         });
-        window.addEventListener('resize', drawMindmapLines);
         
         document.body.addEventListener('click', initAudio, { once: true });
 
